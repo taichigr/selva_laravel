@@ -19,7 +19,12 @@
 //Auth::routes();
 
 Route::prefix('members')->name('members.')->group(function () {
-    Route::get('/regist', 'MemberController@regist')->name('regist');
+    Route::get('/regist', 'MemberController@regist')->name('regist')->middleware('authMember');
     Route::post('/regist_confirm', 'MemberController@confirm')->name('regist_confirm');
     Route::post('/regist_complete', 'MemberController@complete')->name('regist_complete');
+    Route::get('/login', 'MemberController@loginshow')->name('login')->middleware('authMember');
+    Route::post('/login', 'MemberController@login')->name('login')->middleware('authMember');
+    // ログイン処理を書く
+    Route::post('/logout', 'MemberController@logout')->name('logout')->middleware('authMember');
 });
+Route::get('/index', 'MemberController@index')->name('index');

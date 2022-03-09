@@ -1,5 +1,8 @@
 @extends('layouts.app')
+<?php
+//dd(session()->all());
 
+?>
 
 @section('title', '会員登録')
 @section('content')
@@ -80,7 +83,7 @@
                     <input class="btn btn-default" type="submit" value="確認画面へ">
                 </div>
                 <div class="form-group btn-wrapper">
-                    <a class="btn btn-back" href="index.php" >トップに戻る</a>
+                    <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
                 </div>
             </form>
         </div>
