@@ -64,7 +64,7 @@ class MemberController extends Controller
             session()->put('member_id', $member->id);
             session()->put('name_sei', $member->name_sei);
             session()->put('name_mei', $member->name_mei);
-            return view('index');
+            return redirect('/');
         } else {
             $errmsg['login'] = "IDもしくはパスワードが間違っています";
             return view('members.login',['errmsg' => $errmsg]);
@@ -78,7 +78,7 @@ class MemberController extends Controller
     public function logout()
     {
         session()->flush();
-        return redirect('index');
+        return redirect('/');
     }
 
     public function showPasswordConfirmForm()
@@ -127,7 +127,7 @@ class MemberController extends Controller
         session()->put('member_id', $member->id);
         session()->put('name_sei', $member->name_sei);
         session()->put('name_mei', $member->name_mei);
-        return redirect('index');
+        return redirect('/');
 
     }
 }

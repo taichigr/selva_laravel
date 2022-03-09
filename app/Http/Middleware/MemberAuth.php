@@ -29,13 +29,13 @@ class MemberAuth
         if(!empty($login_date->timestamp)) {
             if(($login_date->timestamp + session('login_limit')) < $dt->timestamp) {
                 session()->flush();
-                return redirect('index');
+                return redirect('/');
             } else {
                 session()->put('login_date', Carbon::now());
                 if (url()->current() === route('members.login')) {
-                    return redirect('index');
+                    return redirect('/');
                 } elseif (url()->current() === route('members.regist')) {
-                    return redirect('index');
+                    return redirect('/');
                 }
             }
         } else {

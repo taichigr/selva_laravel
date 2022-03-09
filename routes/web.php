@@ -27,7 +27,7 @@ Route::prefix('members')->name('members.')->group(function () {
     // ログイン処理を書く
     Route::post('/logout', 'MemberController@logout')->name('logout')->middleware('authMember');
 });
-Route::get('/index', 'MemberController@index')->name('index');
+Route::get('/', 'MemberController@index')->name('index');
 
 // パスワード再設定のためにメールアドレスを入力してもらう画面表示
 Route::get('/password/confirm', 'MemberController@showPasswordConfirmForm')->name('password.confirm');
