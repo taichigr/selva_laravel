@@ -19,6 +19,9 @@
                 <lavel style="width: 115px; display: inline-block">パスワード</lavel>
                 <input style="width: 260px;" type="password" name="password" required>
             </div>
+            <div style="text-align: right; color: #406bca; margin-right: 177px">
+                <a href="{{ route('password.confirm') }}">パスワードを忘れた方はこちら</a>
+            </div>
             <div class="err-msg">
                 @if ($errors->any())
                     <div class="card-text text-left alert alert-danger">

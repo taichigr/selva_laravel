@@ -28,3 +28,14 @@ Route::prefix('members')->name('members.')->group(function () {
     Route::post('/logout', 'MemberController@logout')->name('logout')->middleware('authMember');
 });
 Route::get('/index', 'MemberController@index')->name('index');
+
+// パスワード再設定のためにメールアドレスを入力してもらう画面表示
+Route::get('/password/confirm', 'MemberController@showPasswordConfirmForm')->name('password.confirm');
+
+// ここでは、パスワード再設定メールを送信
+Route::post('/password/confirm', 'MemberController@passwordConfirmSend')->name('password.confirm');
+Route::get('/password/confirm/{token}','MemberController@passwordConfirmCheckToken')->name('password.checktoken');
+Route::post('/password/update','MemberController@passwordUpdate')->name('password.update');
+
+
+//Route::get('/mail', 'MailSendController@send');
