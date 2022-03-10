@@ -156,7 +156,7 @@
                 //フォームデータにアップロードファイルの情報追加
                 form.append("image_1", file);
                 $.ajax({
-                    url: '/products/regist/productimage',
+                    url: '{{ route('products.registImage') }}',
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
