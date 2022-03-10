@@ -114,7 +114,7 @@ class MemberController extends Controller
     public function passwordUpdate(Request $request)
     {
         $validatedData = $request->validate([
-            'password' => 'required|string|min:8|max:20|confirmed',
+            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20|confirmed',
         ]);
         DB::table('members')
             ->where('email', session()->get('email'))
@@ -128,6 +128,5 @@ class MemberController extends Controller
         session()->put('name_sei', $member->name_sei);
         session()->put('name_mei', $member->name_mei);
         return redirect('/');
-
     }
 }
