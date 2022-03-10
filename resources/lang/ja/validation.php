@@ -94,7 +94,7 @@ return [
     'not_regex'            => ':attributeの形式が正しくありません。',
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
-    'regex'                => ':attributeに正しい形式を指定してください。',
+    'regex'                => ':attributeは半角英数字で入力してください',
     'required'             => ':attributeは必ず指定してください。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',
@@ -116,9 +116,6 @@ return [
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeに正しい形式を指定してください。',
     'uuid'                 => ':attributeに有効なUUIDを指定してください。',
-    'regex' => [
-        '/\A([a-zA-Z0-9]{8,})+\z/u' => ':attributeは半角英数字で入力してください',
-        ],
 
     /*
     |--------------------------------------------------------------------------
