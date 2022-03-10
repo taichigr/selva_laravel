@@ -164,7 +164,7 @@
                     },
                     dataType: "json",
                     processData: false,
-                    // contentType: false,
+                    contentType: false,
                     data: form,
                     // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
                     success: function(data) {
