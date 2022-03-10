@@ -161,6 +161,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
+                    dataType: "json",
                     processData: false,
                     contentType: false,
                     data: form,
