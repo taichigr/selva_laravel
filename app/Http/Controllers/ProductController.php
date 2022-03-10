@@ -14,10 +14,10 @@ class ProductController extends Controller
     public function registForm()
     {
         $product_categories = DB::table('product_categories')->get();
-//        $product_subcategories = DB::table('product_subcategories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
         return view('products.regist',[
             'product_categories' => $product_categories,
-//            'product_subcategories' => $product_subcategories
+            'product_subcategories' => $product_subcategories
             ]);
     }
     public function getSubCategories(Request $request)

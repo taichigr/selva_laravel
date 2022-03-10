@@ -1,7 +1,8 @@
 @extends('layouts.app')
 <?php
 //dd(session()->all());
-
+//    dd(old('product_category_id') == 1);
+//    dd($product_subcategories);
 ?>
 
 @section('title', '新規商品登録')
@@ -37,7 +38,7 @@
                             <option value="0">選択してください</option>
                             @if(!empty($product_categories))
                                 @foreach($product_categories as $product_category)
-                                    <option value="{{ $product_category->id }}">{{ $product_category->name }}</option>
+                                    <option value="{{ $product_category->id }}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -46,7 +47,13 @@
                         <lavel for=""></lavel>
 {{--                        小カテゴリーをjQueryで生成--}}
                         <select required name="product_subcategory_id" id="js-ajax-target-field">
-
+                            @if(!empty(old('product_subcategory_id')))
+                                @foreach($product_subcategories as $product_subcategory)
+                                    @if($product_subcategory->product_category_id == old('product_category_id'))
+                                        <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -54,8 +61,10 @@
                         <span style="width: 115px; display: inline-block">商品写真</span>
                         <span>写真１</span>
                         <div style="text-align: center">
+                            <div class="js-image1-error-target err-msg">
+                            </div>
                             <div class="preview-image-wrapper">
-                                <img class="js-preview1 upload-image" src="">
+                                <img class="js-preview1 upload-image" src="{{ !empty(old('image_1')) ? "/uploads/".old('image_1'): '' }}">
                             </div>
                             <label class="btn btn-back" for="image_1">アップロード
                                 <input class="js-image-uploader1" id="image_1" style="display: none;" type="file">
@@ -67,9 +76,11 @@
                         <span style="width: 115px; display: inline-block"></span>
                         <span>写真２</span>
                         <div style="text-align: center">
+                            <div class="js-image2-error-target err-msg">
+                            </div>
 
                             <div class="preview-image-wrapper">
-                                <img class="js-preview2 upload-image" src="">
+                                <img class="js-preview2 upload-image" src="{{ !empty(old('image_2')) ? "/uploads/".old('image_2'): '' }}">
                             </div>
                             <label class="btn btn-back" for="image_2">アップロード
                                 <input class="js-image-uploader2" id="image_2" style="display: none;" type="file">
@@ -81,9 +92,11 @@
                         <span style="width: 115px; display: inline-block"></span>
                         <span>写真３</span>
                         <div style="text-align: center">
+                            <div class="js-image3-error-target err-msg">
+                            </div>
 
                             <div class="preview-image-wrapper">
-                                <img class="js-preview3 upload-image" src="">
+                                <img class="js-preview3 upload-image" src="{{ !empty(old('image_3')) ? "/uploads/".old('image_3'): '' }}">
                             </div>
                             <label class="btn btn-back" for="image_3">アップロード
                                 <input class="js-image-uploader3" id="image_3" style="display: none;" type="file">
@@ -95,9 +108,11 @@
                         <span style="width: 115px; display: inline-block"></span>
                         <span>写真４</span>
                         <div style="text-align: center">
+                            <div class="js-image4-error-target err-msg">
+                            </div>
 
                             <div class="preview-image-wrapper">
-                                <img class="js-preview4 upload-image" src="">
+                                <img class="js-preview4 upload-image" src="{{ !empty(old('image_4')) ? "/uploads/".old('image_4'): '' }}">
                             </div>
                             <label class="btn btn-back" for="image_4">アップロード
                                 <input class="js-image-uploader4" id="image_4" style="display: none;" type="file">
@@ -109,7 +124,7 @@
                 <div class="form-group" style="display: flex; padding-top: 20px">
                     <div style="width: 115px; display: inline-block">商品説明</div>
                     <div style="width: 260px;">
-                        <textarea style="width: 260px;" type="text" name="product_content" required value="{{old('product_content')}}"></textarea>
+                        <textarea style="width: 260px;" type="text" name="product_content" required>{{old('product_content')}}</textarea>
                     </div>
                 </div>
                 <div class="err-msg">
@@ -136,15 +151,13 @@
                     url: '/products/regist/getsubcategory/'+categoryid,
                     type: 'GET',
                     // コントローラから受け取ったデータ(検索結果)をdataに代入
-                    success: function(data) {
-                        console.log(data.product_subcategories);
-                        $('#js-ajax-target-field').append('<option value="0">選択してください</option>')
-                        $(data.product_subcategories).each((index, category) => {
-                            console.log(category)
-                            $('#js-ajax-target-field').append('<option value='+category.id+'>'+category.name+'</option>')
-                        });
-
-                    }
+                }).done((data) => {
+                    console.log(data.product_subcategories);
+                    $('#js-ajax-target-field').append('<option value="0">選択してください</option>')
+                    $(data.product_subcategories).each((index, category) => {
+                        console.log(category)
+                        $('#js-ajax-target-field').append('<option value='+category.id+'>'+category.name+'</option>')
+                    });
                 })
             })
 
@@ -169,11 +182,15 @@
                     contentType: false,
                     data: form,
                     // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
-                    success: function(data) {
-                        // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
-                        // console.log(data);
-                        $('.js-preview1').attr('src', '/uploads/'+data['returnFileName1']);
-                        $('.js-image-path-hidden1').attr('value', data['returnFileName1']);
+                }).done((data) => {
+                    $('.js-preview1').attr('src', '/uploads/'+data['returnFileName1']);
+                    $('.js-image-path-hidden1').attr('value', data['returnFileName1']);
+                }).fail((error) => {
+                    console.log(error.statusText)
+                    if(error.statusText == 'Payload Too Large') {
+                        console.log(error.statusText)
+                        // $('').append('<p>'+error.statusText+'</p>');
+                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
                     }
                 })
             });
@@ -194,14 +211,18 @@
                     contentType: false,
                     data: form,
                     // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
-                    success: function(data) {
-                        // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
-                        // console.log(data);
-                        $('.js-preview2').attr('src', '/uploads/'+data['returnFileName2']);
-                        $('.js-image-path-hidden2').attr('value', data['returnFileName2']);
+                }).done((data) => {
+                    // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
+                    // console.log(data);
+                    $('.js-preview2').attr('src', '/uploads/'+data['returnFileName2']);
+                    $('.js-image-path-hidden2').attr('value', data['returnFileName2']);
+                }).fail((error) => {
+                    if(error.statusText == 'Payload Too Large') {
+                        $('.js-image2-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
                     }
                 })
             });
+
 
             $('.js-image-uploader3').on('change', function (e) {
                 var file = this.files[0];
@@ -219,11 +240,14 @@
                     contentType: false,
                     data: form,
                     // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
-                    success: function(data) {
-                        // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
-                        // console.log(data);
-                        $('.js-preview3').attr('src', '/uploads/'+data['returnFileName3']);
-                        $('.js-image-path-hidden3').attr('value', data['returnFileName3']);
+                }).done((data) => {
+                    // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
+                    // console.log(data);
+                    $('.js-preview3').attr('src', '/uploads/'+data['returnFileName3']);
+                    $('.js-image-path-hidden3').attr('value', data['returnFileName3']);
+                }).fail((error) => {
+                    if(error.statusText == 'Payload Too Large') {
+                        $('.js-image3-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
                     }
                 })
             });
@@ -244,11 +268,14 @@
                     contentType: false,
                     data: form,
                     // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
-                    success: function(data) {
-                        // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
-                        // console.log(data);
-                        $('.js-preview4').attr('src', '/uploads/'+data['returnFileName4']);
-                        $('.js-image-path-hidden4').attr('value', data['returnFileName4']);
+                }).done((data) => {
+                    // 受け取ったデータ(検索結果)を仕入れ先のvalueに反映します
+                    // console.log(data);
+                    $('.js-preview4').attr('src', '/uploads/'+data['returnFileName4']);
+                    $('.js-image-path-hidden4').attr('value', data['returnFileName4']);
+                }).fail((error) => {
+                    if(error.statusText == 'Payload Too Large') {
+                        $('.js-image4-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
                     }
                 })
             });
@@ -284,6 +311,9 @@
             //     reader.readAsDataURL(e.target.files[0]);
             // });
 
+            $('form').submit(function () {
+                $(this).find(':submit').prop('disabled', 'true');
+            });
         })
     </script>
 @endsection
