@@ -60,7 +60,7 @@ class ProductController extends Controller
             'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
             'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
-        Log::info('バリデーション後', ['image_1の情報' => $request->image_1]);
+        Log::info('バリデーション後', ['image_1の情報' => $request->all()]);
 //        return;
         // バリデーションは通っているのか？そして、データはリクエストのどこに入っているのか
         if ($file1 = $request->image_1) {
