@@ -160,7 +160,6 @@
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'Content-Type': 'multipart/form-data'
                     },
                     dataType: "json",
                     processData: false,
