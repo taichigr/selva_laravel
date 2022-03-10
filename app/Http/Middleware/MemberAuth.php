@@ -40,7 +40,7 @@ class MemberAuth
             }
         } else {
             if(url()->current() === route('members.regist')) {
-                redirect('members/regist');
+                $next($request);
             } elseif (url()->current() !== route('members.login')) {
                 return redirect('members/login');
             }

@@ -30,7 +30,7 @@ class MemberRequest extends FormRequest
             'name_mei' => 'required|string|max:20',
             'nickname' => 'required|string|max:10',
             'gender' => 'required|in:1,2',
-            'password' => 'required|string|min:8|max:20|confirmed',
+            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20|confirmed',
             'email' => 'required|string|max:200|email|unique:members'
         ];
     }
@@ -45,6 +45,11 @@ class MemberRequest extends FormRequest
             'password' => 'パスワード',
             'password_confirmation' => 'パスワード確認',
             'email' => 'メールアドレス（ログインID）'
+        ];
+    }
+    public function messages() {
+        return [
+            'password.regex' => 'パスワードは半角英数字で入力してください'
         ];
     }
 }

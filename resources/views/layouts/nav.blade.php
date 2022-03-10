@@ -22,7 +22,7 @@
             <li><a class="btn btn-header" href="{{ route('members.login') }}">ログイン</a></li>
             <?php endif ?>
             <?php if(!empty(session('login_date'))): ?>
-            <li><a class="btn btn-header" href="">新規スレッド作成</a></li>
+            <li><a class="btn btn-header" href="{{ route('products.registForm') }}">新規商品登録</a></li>
             <?php endif ?>
             <?php if(!empty(session('login_date'))): ?>
             <form method="post" action="{{ route('members.logout') }}">

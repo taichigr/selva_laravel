@@ -38,4 +38,19 @@ Route::get('/password/confirm/{token}','MemberController@passwordConfirmCheckTok
 Route::post('/password/update','MemberController@passwordUpdate')->name('password.update');
 
 
+Route::prefix('products')->name('products.')->group(function () {
+    Route::get('/regist', 'ProductController@registForm')->name('registForm')->middleware('authMember');
+    Route::post('/regist', 'ProductController@regist')->name('regist')->middleware('authMember');
+
+    // ajax通信でサブカテゴリー情報をとる
+    Route::get('/regist/getsubcategory/{categoryid}', 'ProductController@getSubCategories')->name('getSubCategories');
+
+    //
+    Route::post('/regist/productstore', 'ProductController@productStore')->name('productStore')->middleware('authMember');
+
+    // ajaxで画像をアップロード
+    Route::post('/regist/productimage', 'ProductController@registImage')->name('registImage')->middleware('authMember');
+
+});
+
 //Route::get('/mail', 'MailSendController@send');
