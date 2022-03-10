@@ -56,7 +56,7 @@ class MemberController extends Controller
         $member = DB::table('members')->where('email', $validatedData['email'])->first();
         if(empty($member)) {
             $errmsg['login'] = "IDもしくはパスワードが間違っています";
-            return view('members.login',['errmsg' => $errmsg]);
+            return view('members.login',['errmsg' => $errmsg, 'prevEmail' => $request->email]);
         }
         if(Hash::check($validatedData['password'], $member->password)){
             session()->put('login_date', Carbon::now());
@@ -67,7 +67,7 @@ class MemberController extends Controller
             return redirect('/');
         } else {
             $errmsg['login'] = "IDもしくはパスワードが間違っています";
-            return view('members.login',['errmsg' => $errmsg]);
+            return view('members.login',['errmsg' => $errmsg, 'prevEmail' => $request->email]);
         }
     }
     public function index()
@@ -95,7 +95,7 @@ class MemberController extends Controller
         $member = DB::table('members')->where('email', $validatedData['email'])->first();
         if(empty($member)) {
             $errmsg['login'] = "IDもしくはパスワードが間違っています";
-            return view('members.login',['errmsg' => $errmsg]);
+            return view('password.confirm',['errmsg' => $errmsg, 'prevEmail' => $request->email]);
         }
         $token = Str::random(30);
         session()->put('password_token', $token);

@@ -20,7 +20,7 @@
                 @csrf
                 <div class="form-group" style="margin-top: 30px">
                     <lavel style="width: 115px; display: inline-block">メールアドレス</lavel>
-                    <input style="width: 260px;" type="text" name="email" required value="{{ old('email') }}">
+                    <input style="width: 260px;" type="text" name="email" required value="{{ !empty($prevEmail)?$prevEmail: old('email') }}">
                 </div>
 
                 <div class="err-msg">

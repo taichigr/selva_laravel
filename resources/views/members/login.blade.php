@@ -1,6 +1,8 @@
 @extends('layouts.app')
 <?php
 //dd(session()->all());
+//    if(!empty($prevEmail)){dd($prevEmail);}
+
 ?>
 
 @section('title', 'ログイン')
@@ -13,7 +15,7 @@
             @csrf
             <div class="form-group">
                 <lavel style="width: 115px; display: inline-block">メールアドレス（ID）</lavel>
-                <input style="width: 260px;" type="text" name="email" required value="{{ old('email') }}">
+                <input style="width: 260px;" type="text" name="email" required value="{{ !empty($prevEmail)?$prevEmail: old('email') }}">
             </div>
             <div class="form-group">
                 <lavel style="width: 115px; display: inline-block">パスワード</lavel>
