@@ -162,6 +162,7 @@
                 form.append("image_1", file);
                 $.ajax({
                     url: '{{ route('products.registImage') }}',
+                    cache: false,
                     type: 'POST',
                     dataType: "json",
                     processData: false,
