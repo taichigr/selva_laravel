@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="form-group btn-wrapper">
-                    <input class="btn btn-default" type="submit" value="確認画面へ">
+                    <input class="btn btn-default" type="submit" value="パスワードリセット">
                 </div>
                 <div class="form-group btn-wrapper">
                     <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
