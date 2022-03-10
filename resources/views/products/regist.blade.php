@@ -149,6 +149,11 @@
             })
 
             // 画像を上げた瞬間にajaxでその画像をlaravel側にアップロードし、そのパスを取ってくる
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $('.js-image-uploader1').on('change', function (e) {
                 var file = this.files[0];
                 //フォームデータにアップロードファイルの情報追加
@@ -158,9 +163,6 @@
                 $.ajax({
                     url: '{{ route('products.registImage') }}',
                     type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
                     dataType: "json",
                     processData: false,
                     contentType: false,
