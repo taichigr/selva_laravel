@@ -51,7 +51,7 @@ class MemberController extends Controller
     {
         $validatedData = $request->validate([
             'email' => 'required|string|max:200|email',
-            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20|confirmed',
+            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20',
         ]);
         $member = DB::table('members')->where('email', $validatedData['email'])->first();
         if(empty($member)) {
