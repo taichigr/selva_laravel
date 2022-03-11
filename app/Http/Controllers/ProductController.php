@@ -73,7 +73,7 @@ class ProductController extends Controller
     }
 
 
-    public function registImage(Request $request)
+    public function registImage(Request $request): JsonResponse
     {
         // 画像アップロード機能
         $this->validate($request, [

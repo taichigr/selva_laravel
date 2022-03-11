@@ -157,7 +157,6 @@
                     console.log(data.product_subcategories);
                     $('#js-ajax-target-field').append('<option value="0">選択してください</option>')
                     $(data.product_subcategories).each((index, category) => {
-                        console.log(category)
                         $('#js-ajax-target-field').append('<option value='+category.id+'>'+category.name+'</option>')
                     });
                 })
@@ -192,7 +191,11 @@
                     if(error.statusText == 'Payload Too Large') {
                         console.log(error.statusText)
                         // $('').append('<p>'+error.statusText+'</p>');
-                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
+                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます。10MB以下にしてください</p>')
+                    }
+                    if(error.statusText == 'Unprocessable Entity') {
+                        console.log(error.statusText);
+                        $('.js-image1-error-target').append('<p>１０MBまでのjpg、jpeg、png、gifのファイルのみアップロード可能です</p>')
                     }
                 })
             });
@@ -220,7 +223,13 @@
                     $('.js-image-path-hidden2').attr('value', data['returnFileName2']);
                 }).fail((error) => {
                     if(error.statusText == 'Payload Too Large') {
-                        $('.js-image2-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
+                        console.log(error.statusText)
+                        // $('').append('<p>'+error.statusText+'</p>');
+                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます。10MB以下にしてください</p>')
+                    }
+                    if(error.statusText == 'Unprocessable Entity') {
+                        console.log(error.statusText);
+                        $('.js-image1-error-target').append('<p>１０MBまでのjpg、jpeg、png、gifのファイルのみアップロード可能です</p>')
                     }
                 })
             });
@@ -249,7 +258,13 @@
                     $('.js-image-path-hidden3').attr('value', data['returnFileName3']);
                 }).fail((error) => {
                     if(error.statusText == 'Payload Too Large') {
-                        $('.js-image3-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
+                        console.log(error.statusText)
+                        // $('').append('<p>'+error.statusText+'</p>');
+                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます。10MB以下にしてください</p>')
+                    }
+                    if(error.statusText == 'Unprocessable Entity') {
+                        console.log(error.statusText);
+                        $('.js-image1-error-target').append('<p>１０MBまでのjpg、jpeg、png、gifのファイルのみアップロード可能です</p>')
                     }
                 })
             });
@@ -277,7 +292,13 @@
                     $('.js-image-path-hidden4').attr('value', data['returnFileName4']);
                 }).fail((error) => {
                     if(error.statusText == 'Payload Too Large') {
-                        $('.js-image4-error-target').append('<p>ファイルのサイズが大きすぎます</p>')
+                        console.log(error.statusText)
+                        // $('').append('<p>'+error.statusText+'</p>');
+                        $('.js-image1-error-target').append('<p>ファイルのサイズが大きすぎます。10MB以下にしてください</p>')
+                    }
+                    if(error.statusText == 'Unprocessable Entity') {
+                        console.log(error.statusText);
+                        $('.js-image1-error-target').append('<p>１０MBまでのjpg、jpeg、png、gifのファイルのみアップロード可能です</p>')
                     }
                 })
             });
