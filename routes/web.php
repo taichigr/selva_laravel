@@ -45,9 +45,12 @@ Route::prefix('products')->name('products.')->group(function () {
     // ajax通信でサブカテゴリー情報をとる
     Route::get('/regist/getsubcategory/{categoryid}', 'ProductController@getSubCategories')->name('getSubCategories');
     //
-    Route::post('/regist/productstore', 'ProductController@productStore')->name('productStore')->middleware('authMember');
+    Route::post('/regist/productstorecheck', 'ProductController@productStorecheck')->name('productStorecheck')->middleware('authMember');
     // ajaxで画像をアップロード
     Route::post('/regist/productimage', 'ProductController@registImage')->name('registImage')->middleware('authMember');
+
+    Route::post('/regist/productstore', 'ProductController@productStore')->name('productStore')->middleware('authMember');
+
 
     Route::get('/show', 'ProductController@show')->name('show');
 

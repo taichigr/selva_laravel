@@ -11,7 +11,7 @@
     <main>
         <div class="container">
             <h2>商品登録</h2>
-            <form method="post" action="{{ route('products.productStore') }}" enctype="multipart/form-data">
+            <form method="post" action="{{ route('products.productStorecheck') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="err-msg">
                     @if ($errors->any())

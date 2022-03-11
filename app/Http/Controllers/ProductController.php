@@ -32,10 +32,33 @@ class ProductController extends Controller
     }
 
 
-    public function productStore(ProductRequest $request, Product $product)
+    public function productStorecheck(ProductRequest $request, Product $product)
     {
         //
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
         //ここの処理では画像のパスを保存
+        $product->member_id = session()->get('member_id');
+        $product->product_category_id = $request->product_category_id;
+        $product->product_subcategory_id = $request->product_subcategory_id;
+        $product->name = $request->name;
+        $product->image_1 = $request->image_1;
+        $product->image_2 = $request->image_2;
+        $product->image_3 = $request->image_3;
+        $product->image_4 = $request->image_4;
+        $product->product_content = $request->product_content;
+//        $product->save();
+        return view('products.regist_confirm', [
+            'product' => $product,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories
+        ]);
+        // フォームリクエストでバリデーション
+        // 画像を保存して、パスと他のデータをDBに保存
+    }
+
+    public function productStore(Request $request, Product $product)
+    {
         $product->member_id = session()->get('member_id');
         $product->product_category_id = $request->product_category_id;
         $product->product_subcategory_id = $request->product_subcategory_id;
@@ -47,9 +70,8 @@ class ProductController extends Controller
         $product->product_content = $request->product_content;
         $product->save();
         return redirect('/');
-        // フォームリクエストでバリデーション
-        // 画像を保存して、パスと他のデータをDBに保存
     }
+
 
     public function registImage(Request $request)
     {
