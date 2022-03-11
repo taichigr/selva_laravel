@@ -170,8 +170,8 @@ class ProductController extends Controller
         }
         return view('products.show', [
             'products' => $products,
-            'return_product_caegory_id' => $product_category_id,
-            'return_product_subcaegory_id' => $product_subcategory_id,
+            'return_product_category_id' => $product_category_id,
+            'return_product_subcategory_id' => $product_subcategory_id,
             'return_freeword' => $freeword,
             'product_categories' => $product_categories,
             'product_subcategories' => $product_subcategories,

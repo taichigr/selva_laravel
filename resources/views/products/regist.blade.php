@@ -1,8 +1,9 @@
 @extends('layouts.app')
 <?php
 //dd(session()->all());
-//    dd(old('product_category_id') == 1);
-//    dd($product_subcategories);
+
+//    dd(url()->previous());
+//    dd(route('index'));
 ?>
 
 @section('title', '新規商品登録')
@@ -136,9 +137,16 @@
                 <div class="form-group btn-wrapper">
                     <input class="btn btn-default" type="submit" value="確認画面へ">
                 </div>
+                @if(url()->previous() == route('index').'/')
                 <div class="form-group btn-wrapper">
                     <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
                 </div>
+                @else
+{{--                @if(url()->previous() == route('products.show'))--}}
+                <div class="form-group btn-wrapper">
+                    <a class="btn btn-back" href="{{ route('products.show') }}" >商品一覧へ</a>
+                </div>
+                @endif
             </form>
         </div>
     </main>

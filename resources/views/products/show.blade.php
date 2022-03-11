@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <?php
-
+//dd($return_product_category_id);
 //dd($products);
 ?>
 
@@ -90,9 +90,17 @@
             </div>
             @endforeach
         </div>
+
+        @if(!empty($return_product_category_id) || !empty($return_product_subcategory_id) || !empty($freeword))
         <div class="pagination">
-            {{ $products->links() }}
+            {{ $products->appends(['product_category_id' => $return_product_category_id,'product_subcategory_id' => $return_product_subcategory_id,'freeword' => $return_freeword])->links() }}
         </div>
+        @else
+            <div class="pagination">
+                {{ $products->links() }}
+            </div>
+        @endif
+
 
         <div class="form-group btn-wrapper">
             <a class="btn btn-back" style="border: 1px solid #406bca; color: #406bca" href="{{ route('index') }}" >トップに戻る</a>
