@@ -54,6 +54,8 @@ Route::prefix('products')->name('products.')->group(function () {
 
     Route::get('/show', 'ProductController@show')->name('show');
 
+    Route::get('/show/detail', 'ProductController@detail')->name('detail');
+
     Route::get('/show/search', 'ProductController@search')->name('search');
 
 });

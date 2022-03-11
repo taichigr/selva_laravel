@@ -180,4 +180,17 @@ class ProductController extends Controller
             'product_subcategories' => $product_subcategories,
         ]);
     }
+
+    public function detail(Request $request)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        $id = $request->id;
+        $product = Product::where('id', $id)->first();
+        return view('products.detail', [
+            'product' => $product,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories
+        ]);
+    }
 }

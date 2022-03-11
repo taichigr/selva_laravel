@@ -469,3 +469,14 @@ table tr td a {
     border: 1px solid #000000;
     background-color: #fff;
 }
+.detail-image-area {
+    width: 900px;
+    display: flex;
+}
+.detail-image-wrapper {
+    width: 200px;
+    margin: 10px;
+}
+.detail-image-wrapper img {
+    width: 100%;
+}

@@ -86,6 +86,9 @@
                     <div class="name-area">
                         {{ $product->name }}
                     </div>
+                    <div class="form-group btn-wrapper" style="text-align: right">
+                        <a class="btn btn-back" style="border: 1px solid #406bca; background-color: #406bca;color: #fff" href="{{ route('products.detail', ['id' => $product->id]) }}" >詳細</a>
+                    </div>
                 </div>
             </div>
             @endforeach
