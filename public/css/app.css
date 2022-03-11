@@ -90,6 +90,10 @@ body {
   line-height: 1;
 }
 
+img {
+  width: 100%;
+}
+
 article,
 aside,
 details,
@@ -555,5 +559,72 @@ td {
 
 .upload-image {
   width: 100%;
+}
+
+.search-btn {
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 8px 14px;
+  font-size: 16px;
+}
+
+.search-btn:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.product-card {
+  width: 100%;
+  min-height: 180px;
+  display: flex;
+  overflow-wrap: break-word;
+  border-top: #000000 solid 1px;
+}
+
+.product-card:last-child {
+  border-bottom: #000000 solid 1px;
+}
+
+.product-card-left {
+  width: 40%;
+  height: 100%;
+  padding: 10px;
+}
+
+.product-card-right {
+  width: 60%;
+  height: 100%;
+}
+
+.category-area {
+  margin-top: 30px;
+}
+
+.name-area {
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+.pagination .disabled {
+  pointer-events: none;
+  color: #7d7d7d;
+}
+
+/*ページネーション*/
+
+.pagination {
+  margin: 0 auto;
+  width: 700px;
+  margin-top: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: right;
+}
+
+.page-item {
+  display: block;
+  padding: 5px 10px;
+  border: 1px solid #000000;
+  background-color: #fff;
 }
 

@@ -96,4 +96,63 @@ class ProductController extends Controller
             $fileName4 = "";
         }
     }
+
+    public function show()
+    {
+        $products = DB::table('products')->paginate(10);
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('products.show', [
+            'products' => $products,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+        ]);
+    }
+
+    public function search(Request $request, Product $product)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+
+        $product_category_id = $request->product_category_id;
+        $product_subcategory_id = $request->product_subcategory_id;
+        $freeword = $request->freeword;
+        if(!empty($product_category_id) && !empty($product_subcategory_id) && !empty($freeword)){
+            $products = $product->where([
+                'product_category_id' => $product_category_id,
+                'product_subcategory_id' => $product_subcategory_id,
+            ])->orwhere('name', 'like', '%'.$freeword.'%')
+                ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->paginate(10);
+        } elseif(!empty($product_category_id) && empty($product_subcategory_id) && empty($freeword)) {
+            $products = $product->where([
+                'product_category_id' => $product_category_id,
+            ])->paginate(10);
+        } elseif (!empty($product_category_id) && !empty($product_subcategory_id) && empty($freeword)) {
+            $products = $product->where([
+                'product_category_id' => $product_category_id,
+                'product_subcategory_id' => $product_subcategory_id,
+            ])->paginate(10);
+        } elseif (!empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {
+            $products = $product->where([
+                'product_category_id' => $product_category_id,
+            ])->orwhere('name', 'like', '%'.$freeword.'%')
+                ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->paginate(10);
+        } elseif (empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {
+            $products = $product->orwhere('name', 'like', '%'.$freeword.'%')
+                ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->paginate(10);
+        } else {
+            return redirect('products.show');
+        }
+        return view('products.show', [
+            'products' => $products,
+            'return_product_caegory_id' => $product_category_id,
+            'return_product_subcaegory_id' => $product_subcategory_id,
+            'return_freeword' => $freeword,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+        ]);
+    }
 }

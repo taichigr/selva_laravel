@@ -1,5 +1,5 @@
 <!--　ヘッダー　-->
-<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
+{{--<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>--}}
 <header class="header">
     <div class="header-left">
         <?php if(!empty(session('login_date'))): ?>
@@ -14,7 +14,7 @@
     </div>
     <div class="header-right">
         <ul>
-            <li><a class="btn btn-header" href="">スレッド一覧</a></li>
+            <li><a class="btn btn-header" href="{{ route('products.show') }}">商品一覧</a></li>
             <?php if(empty(session('login_date'))): ?>
             <li><a class="btn btn-header" href="{{ route('members.regist') }}">新規会員登録</a></li>
             <?php endif ?>

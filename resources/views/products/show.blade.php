@@ -1,145 +1,101 @@
 @extends('layouts.app')
 <?php
-//dd(session()->all());
-//    dd(old('product_category_id') == 1);
-//    dd($product_subcategories);
+
+//dd($products);
 ?>
 
-@section('title', '新規商品登録')
+@section('title', '商品一覧')
 @section('content')
-    @include('layouts.nav')
+    <header class="header">
+        <div class="header-left">
+            <h2 style="height: 60px; line-height: 60px;">商品一覧</h2>
+        </div>
+        <div class="header-right">
+            <ul>
+                <?php if(!empty(session('login_date'))): ?>
+                <li><a class="btn btn-header" href="{{ route('products.registForm') }}">新規商品登録</a></li>
+                <?php endif ?>
+            </ul>
+        </div>
+    </header>
     <main>
-        <div class="container">
-            <h2>商品登録</h2>
-            <form method="post" action="{{ route('products.productStore') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="err-msg">
-                    @if ($errors->any())
-                        <div class="card-text text-left alert alert-danger">
-                            <ul class="mb-0">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
+        <div class="container bg-color_white">
+
+            <form action="{{ route('products.search') }}">
 
                 <div class="form-group">
-                    <lavel style="width: 115px; display: inline-block">商品名</lavel>
-                    <input style="width: 260px;" type="text" name="name" required value="{{old('name')}}">
-                </div>
-
-                <div class="form-group">
-                    商品カテゴリ
+                    カテゴリ
                     <div class="form-inline">
                         <lavel for=""></lavel>
-                        <select name="product_category_id" id="js-ajax-change-subcategories" required>
-                            <option value="0">選択してください</option>
+                        <select name="product_category_id" id="js-ajax-change-subcategories">
+                            <option value="0">カテゴリ</option>
                             @if(!empty($product_categories))
                                 @foreach($product_categories as $product_category)
-                                    <option value="{{ $product_category->id }}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="form-inline">
-                        <lavel for=""></lavel>
-{{--                        小カテゴリーをjQueryで生成--}}
-                        <select required name="product_subcategory_id" id="js-ajax-target-field">
-                            @if(!empty(old('product_subcategory_id')))
-                                @foreach($product_subcategories as $product_subcategory)
-                                    @if($product_subcategory->product_category_id == old('product_category_id'))
-                                        <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                    @if(!empty($return_product_caegory_id))
+                                        <option value="{{ $product_category->id }}" {{ ( $return_product_caegory_id == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
+                                    @else
+                                        <option value="{{ $product_category->id }}">{{ $product_category->name }}</option>
                                     @endif
                                 @endforeach
                             @endif
                         </select>
                     </div>
-                </div>
-
-
-                    <div class="form-group">
-                        <span style="width: 115px; display: inline-block">商品写真</span>
-                        <span>写真１</span>
-                        <div style="text-align: center">
-                            <div class="js-image1-error-target err-msg">
-                            </div>
-                            <div class="preview-image-wrapper">
-                                <img class="js-preview1 upload-image" src="{{ !empty(old('image_1')) ? "/uploads/".old('image_1'): '' }}">
-                            </div>
-                            <label class="btn btn-back" for="image_1">アップロード
-                                <input class="js-image-uploader1" id="image_1" style="display: none;" type="file">
-                                <input class="js-image-path-hidden1" type="hidden" name="image_1">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span style="width: 115px; display: inline-block"></span>
-                        <span>写真２</span>
-                        <div style="text-align: center">
-                            <div class="js-image2-error-target err-msg">
-                            </div>
-
-                            <div class="preview-image-wrapper">
-                                <img class="js-preview2 upload-image" src="{{ !empty(old('image_2')) ? "/uploads/".old('image_2'): '' }}">
-                            </div>
-                            <label class="btn btn-back" for="image_2">アップロード
-                                <input class="js-image-uploader2" id="image_2" style="display: none;" type="file">
-                                <input class="js-image-path-hidden2" type="hidden" name="image_2">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span style="width: 115px; display: inline-block"></span>
-                        <span>写真３</span>
-                        <div style="text-align: center">
-                            <div class="js-image3-error-target err-msg">
-                            </div>
-
-                            <div class="preview-image-wrapper">
-                                <img class="js-preview3 upload-image" src="{{ !empty(old('image_3')) ? "/uploads/".old('image_3'): '' }}">
-                            </div>
-                            <label class="btn btn-back" for="image_3">アップロード
-                                <input class="js-image-uploader3" id="image_3" style="display: none;" type="file">
-                                <input class="js-image-path-hidden3" type="hidden" name="image_3">
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <span style="width: 115px; display: inline-block"></span>
-                        <span>写真４</span>
-                        <div style="text-align: center">
-                            <div class="js-image4-error-target err-msg">
-                            </div>
-
-                            <div class="preview-image-wrapper">
-                                <img class="js-preview4 upload-image" src="{{ !empty(old('image_4')) ? "/uploads/".old('image_4'): '' }}">
-                            </div>
-                            <label class="btn btn-back" for="image_4">アップロード
-                                <input class="js-image-uploader4" id="image_4" style="display: none;" type="file">
-                                <input class="js-image-path-hidden4" type="hidden" name="image_4">
-                            </label>
-                        </div>
-                    </div>
-
-                <div class="form-group" style="display: flex; padding-top: 20px">
-                    <div style="width: 115px; display: inline-block">商品説明</div>
-                    <div style="width: 260px;">
-                        <textarea style="width: 260px;" type="text" name="product_content" required>{{old('product_content')}}</textarea>
+                    <div class="form-inline">
+                        <lavel for=""></lavel>
+                        {{--                        小カテゴリーをjQueryで生成--}}
+                        <select required name="product_subcategory_id" id="js-ajax-target-field">
+                            <option value="0">サブカテゴリ</option>
+                            @if(!empty($return_product_subcaegory_id))
+                                @foreach($product_subcategories as $product_subcategory)
+                                        <option value="{{ $product_subcategory->id }}" {{ ( $return_product_subcaegory_id == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                 </div>
-                <div class="err-msg">
 
+                <div class="form-group">
+                    <lavel style="width: 115px; display: inline-block">フリーワード</lavel>
+                    @if(!empty($return_freeword))
+                        <input style="width: 260px;" type="text" name="freeword" value="{{ $return_freeword }}">
+                    @else
+                        <input style="width: 260px;" type="text" name="freeword">
+                    @endif
                 </div>
 
-                <div class="form-group btn-wrapper">
-                    <input class="btn btn-default" type="submit" value="確認画面へ">
+                <div class="form-group" style="text-align: center">
+                    <input class="search-btn" type="submit" value="商品検索">
                 </div>
-                <div class="form-group btn-wrapper">
-                    <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
-                </div>
+
             </form>
+        </div>
+
+        <div style="margin: 20px"></div>
+        <div class="container" style="border: none; width: 700px; box-sizing: border-box; padding: 0">
+            @foreach($products as $product)
+            <div class="product-card">
+                <div class="product-card-left">
+                    <img src="{{ !empty($product->image_1) ? "/uploads/".$product->image_1: '' }}" alt="">
+                </div>
+                <div class="product-card-right">
+                    <div class="category-area">
+                        <p style="background-color: #fff; display: inline; padding: 0 10px">
+                            {{ \App\Product::showProductCategoryName($product->product_category_id) }} > {{ \App\Product::showProductSubCategoryName($product->product_subcategory_id) }}
+                        </p>
+                    </div>
+                    <div class="name-area">
+                        {{ $product->name }}
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        <div class="pagination">
+            {{ $products->links() }}
+        </div>
+
+        <div class="form-group btn-wrapper">
+            <a class="btn btn-back" style="border: 1px solid #406bca; color: #406bca" href="{{ route('index') }}" >トップに戻る</a>
         </div>
     </main>
     <script>
@@ -155,7 +111,7 @@
                     // コントローラから受け取ったデータ(検索結果)をdataに代入
                 }).done((data) => {
                     console.log(data.product_subcategories);
-                    $('#js-ajax-target-field').append('<option value="0">選択してください</option>')
+                    $('#js-ajax-target-field').append('<option value="0">サブカテゴリ</option>')
                     $(data.product_subcategories).each((index, category) => {
                         console.log(category)
                         $('#js-ajax-target-field').append('<option value='+category.id+'>'+category.name+'</option>')
