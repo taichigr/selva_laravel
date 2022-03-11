@@ -69,7 +69,7 @@ class ProductController extends Controller
         $product->image_4 = $request->image_4;
         $product->product_content = $request->product_content;
         $product->save();
-        return redirect('/');
+        return redirect('/products/show/');
     }
 
 
@@ -121,7 +121,7 @@ class ProductController extends Controller
 
     public function show()
     {
-        $products = DB::table('products')->paginate(10);
+        $products = DB::table('products')->orderBy('id', 'desc')->paginate(10);
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
         return view('products.show', [
@@ -145,25 +145,28 @@ class ProductController extends Controller
                 'product_subcategory_id' => $product_subcategory_id,
             ])->orwhere('name', 'like', '%'.$freeword.'%')
                 ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->orderBy('id', 'desc')
                 ->paginate(10);
         } elseif(!empty($product_category_id) && empty($product_subcategory_id) && empty($freeword)) {
             $products = $product->where([
                 'product_category_id' => $product_category_id,
-            ])->paginate(10);
+            ])->orderBy('id', 'desc')->paginate(10);
         } elseif (!empty($product_category_id) && !empty($product_subcategory_id) && empty($freeword)) {
             $products = $product->where([
                 'product_category_id' => $product_category_id,
                 'product_subcategory_id' => $product_subcategory_id,
-            ])->paginate(10);
+            ])->orderBy('id', 'desc')->paginate(10);
         } elseif (!empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {
             $products = $product->where([
                 'product_category_id' => $product_category_id,
             ])->orwhere('name', 'like', '%'.$freeword.'%')
                 ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->orderBy('id', 'desc')
                 ->paginate(10);
         } elseif (empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {
             $products = $product->orwhere('name', 'like', '%'.$freeword.'%')
                 ->orwhere('product_content', 'like', '%'.$freeword.'%')
+                ->orderBy('id', 'desc')
                 ->paginate(10);
         } else {
             return redirect('products.show');
