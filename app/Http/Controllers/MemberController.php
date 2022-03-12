@@ -180,4 +180,20 @@ class MemberController extends Controller
         $member->save();
         return redirect('/');
     }
+
+    public function editpasswordshow()
+    {
+//        $member = Member::where('id', session()->get('member_id'))->first();
+        return view('members.edit.member_password');
+    }
+    public function editpasswordcomplete(Request $request)
+    {
+        $validatedData = $request->validate([
+            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20|confirmed',
+        ]);
+        $member = Member::where('id', session()->get('member_id'))->first();
+        $member->password = Hash::make($validatedData['password']);
+        $member->save();
+        return redirect('members/mypage');
+    }
 }

@@ -33,10 +33,14 @@ Route::prefix('members')->name('members.')->group(function () {
 
 
     // 編集関連
+    // 登録情報
     Route::get('/mypage/edit/memberinfo', 'MemberController@editmemberinfoshow')->name('editmemberinfoshow')->middleware('authMember');
     Route::post('/mypage/edit/memberinfoconfirm', 'MemberController@editmemberinfoconfirm')->name('editmemberinfoconfirm')->middleware('authMember');
     Route::post('/mypage/edit/editmemberinfocomplete', 'MemberController@editmemberinfocomplete')->name('editmemberinfocomplete')->middleware('authMember');
-
+    // パスワード変更
+    Route::get('/mypage/edit/password', 'MemberController@editpasswordshow')->name('editpasswordshow')->middleware('authMember');
+    Route::post('/mypage/edit/editpasswordcomplete', 'MemberController@editpasswordcomplete')->name('editpasswordcomplete')->middleware('authMember');
+    // パスワード変更
 
 });
 Route::get('/', 'MemberController@index')->name('index');
