@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ChangeMemberEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
 
@@ -195,5 +196,57 @@ class MemberController extends Controller
         $member->password = Hash::make($validatedData['password']);
         $member->save();
         return redirect('members/mypage');
+    }
+
+
+
+    public function editemailshow()
+    {
+        $member = Member::where('id', session()->get('member_id'))->first();
+        return view('members.edit.member_email', ['member' => $member]);
+    }
+    public function editemailconfirm(Request $request)
+    {
+        // メール送信
+        $validatedData = $request->validate([
+            'email' => 'required|string|max:200|email|unique:members'
+        ]);
+        $member = Member::where('id', session()->get('member_id'))->first();
+        $code = "";
+        for ($i=0; $i<6; $i++) {
+            $code.=mt_rand(0,9);
+        }
+        $member->auth_code = $code;
+        $member->save();
+        Mail::send(new ChangeMemberEmail($validatedData['email'], $code));
+
+        return redirect()->route('members.editemailconfirmshow', ['newemail' => $validatedData['email']]);
+//        return view('members.edit.member_email_confirm', ['newemail' => $validatedData['email']]);
+    }
+    public function editemailconfirmshow(Request $request)
+    {
+        return view('members.edit.member_email_confirm', ['newemail' => $request->newemail]);
+    }
+    public function editemailcomplete(Request $request)
+    {
+//        dd($request);
+
+        $validatedData = $request->validate([
+            'auth_code' => 'required|regex:/^[0-9]*$/'
+        ]);
+        $member = Member::where('id', session()->get('member_id'))->first();
+        if($member->auth_code == $validatedData['auth_code']) {
+            $member->email = $request->newemail;
+//            $member->auth_code = "";
+            $member->save();
+            return redirect('/');
+        } else {
+            return view('members.edit.member_email_confirm', ['newemail' => $request->newemail, 'err_msg' => '認証コードが違います']);
+
+//            return back();
+//            return redirect('members.edit.member_email_confirm', ['newemail' => $request->newemail, 'err_msg' => '認証コードが違います']);
+//            return view('members.edit.member_email_confirm', ['newemail' => $request->newemail, 'err_msg' => '認証コードが違います']);
+        }
+
     }
 }

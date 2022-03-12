@@ -36,11 +36,18 @@ Route::prefix('members')->name('members.')->group(function () {
     // 登録情報
     Route::get('/mypage/edit/memberinfo', 'MemberController@editmemberinfoshow')->name('editmemberinfoshow')->middleware('authMember');
     Route::post('/mypage/edit/memberinfoconfirm', 'MemberController@editmemberinfoconfirm')->name('editmemberinfoconfirm')->middleware('authMember');
-    Route::post('/mypage/edit/editmemberinfocomplete', 'MemberController@editmemberinfocomplete')->name('editmemberinfocomplete')->middleware('authMember');
+    Route::post('/mypage/edit/memberinfocomplete', 'MemberController@editmemberinfocomplete')->name('editmemberinfocomplete')->middleware('authMember');
     // パスワード変更
     Route::get('/mypage/edit/password', 'MemberController@editpasswordshow')->name('editpasswordshow')->middleware('authMember');
-    Route::post('/mypage/edit/editpasswordcomplete', 'MemberController@editpasswordcomplete')->name('editpasswordcomplete')->middleware('authMember');
-    // パスワード変更
+    Route::post('/mypage/edit/passwordcomplete', 'MemberController@editpasswordcomplete')->name('editpasswordcomplete')->middleware('authMember');
+    // メールアドレス変更
+    Route::get('/mypage/edit/email', 'MemberController@editemailshow')->name('editemailshow')->middleware('authMember');
+    // メールを送る処理
+    Route::post('/mypage/edit/emailconfirm', 'MemberController@editemailconfirm')->name('editemailconfirm')->middleware('authMember');
+    // メール認証入力画面を表示するだけの処理
+    Route::get('/mypage/edit/emailconfirmshow', 'MemberController@editemailconfirmshow')->name('editemailconfirmshow')->middleware('authMember');
+    // メールを更新する処理
+    Route::post('/mypage/edit/emailcomplete', 'MemberController@editemailcomplete')->name('editemailcomplete')->middleware('authMember');
 
 });
 Route::get('/', 'MemberController@index')->name('index');

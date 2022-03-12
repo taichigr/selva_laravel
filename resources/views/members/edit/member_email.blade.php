@@ -4,12 +4,12 @@
 
 ?>
 
-@section('title', 'パスワード変更')
+@section('title', 'メールアドレス変更')
 @section('content')
     <main>
         <div class="container">
-            <h2>パスワード変更</h2>
-            <form method="post" action="{{ route('members.editpasswordcomplete') }}">
+            <h2>メールアドレス変更</h2>
+            <form method="post" action="{{ route('members.editemailconfirm') }}">
                 @csrf
                 <div class="err-msg">
                     @if ($errors->any())
@@ -23,19 +23,21 @@
                     @endif
                 </div>
 
-                <div class="form-group">
-                    <lavel style="width: 115px; display: inline-block">パスワード</lavel>
-                    <input style="width: 260px;" type="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <lavel style="width: 115px; display: inline-block">パスワード確認</lavel>
-                    <input style="width: 260px;" type="password" name="password_confirmation" required>
-                </div>
 
+                <div class="form-group">
+                    <lavel style="width: 180px; display: inline-block">現在のメールアドレス</lavel>
+                    <div class="confirm-area inline" style="color: #406bca">
+                        {{ $member->email }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <lavel style="width: 180px; display: inline-block">変更後のメールアドレス</lavel>
+                    <input style="width: 260px;" type="text" name="email" required value="{{old('email')}}">
+                </div>
 
 
                 <div class="form-group btn-wrapper">
-                    <input class="btn btn-default" type="submit" value="パスワードを変更">
+                    <input class="btn btn-default" type="submit" value="認証メール送信">
                 </div>
                 <div class="form-group btn-wrapper">
                     <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
