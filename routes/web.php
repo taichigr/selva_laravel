@@ -27,6 +27,10 @@ Route::prefix('members')->name('members.')->group(function () {
     // ログイン処理を書く
     Route::post('/logout', 'MemberController@logout')->name('logout')->middleware('authMember');
     Route::get('/mypage', 'MemberController@mypage')->name('mypage')->middleware('authMember');
+    Route::get('/withdraw/show','MemberController@withdrawshow' )->name('withdrawshow')->middleware('authMember');
+//    Route::get('/withdraw/confirm','MemberController@withdrawconfirm' )->name('withdrawconfirm')->middleware('authMember');
+    Route::post('/withdraw/complete','MemberController@withdrawcomplete' )->name('withdrawcomplete')->middleware('authMember');
+
 
 });
 Route::get('/', 'MemberController@index')->name('index');

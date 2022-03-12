@@ -58,6 +58,10 @@ class MemberController extends Controller
             $errmsg['login'] = "IDもしくはパスワードが間違っています";
             return view('members.login',['errmsg' => $errmsg, 'prevEmail' => $request->email]);
         }
+        if(!empty($member->deleted_at)) {
+            $errmsg['login'] = "IDもしくはパスワードが間違っています";
+            return view('members.login',['errmsg' => $errmsg, 'prevEmail' => $request->email]);
+        }
         if(Hash::check($validatedData['password'], $member->password)){
             session()->put('login_date', Carbon::now());
             session()->put('login_limit', 60*60);
@@ -136,5 +140,24 @@ class MemberController extends Controller
         $member = Member::where('id', $id)->first();
 //        dd($member);
         return view('members.mypage', ['member' => $member]);
+    }
+
+    public function withdrawshow()
+    {
+        return view('members.withdraw');
+    }
+    public function withdrawcomplete()
+    {
+//        session()->put('login_date', Carbon::now());
+//        session()->put('login_limit', 60*60);
+//        session()->put('member_id', $member->id);
+//        session()->put('name_sei', $member->name_sei);
+//        session()->put('name_mei', $member->name_mei);
+        $member = Member::where('id', session()->get('member_id'))->first();
+        $member->deleted_at = Carbon::now();
+        $member->save();
+        session()->flush();
+        return redirect('/');
+
     }
 }

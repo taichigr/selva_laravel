@@ -63,6 +63,12 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="btn-wrapper">
+                        <a class="btn btn-back-blue" href="{{ route('members.withdrawshow') }}">退会</a>
+                    </div>
+                </div>
+
 
         </div>
     </main>
