@@ -26,6 +26,8 @@ Route::prefix('members')->name('members.')->group(function () {
     Route::post('/login', 'MemberController@login')->name('login')->middleware('authMember');
     // ログイン処理を書く
     Route::post('/logout', 'MemberController@logout')->name('logout')->middleware('authMember');
+    Route::get('/mypage', 'MemberController@mypage')->name('mypage')->middleware('authMember');
+
 });
 Route::get('/', 'MemberController@index')->name('index');
 

@@ -25,6 +25,9 @@
             <li><a class="btn btn-header" href="{{ route('products.registForm') }}">新規商品登録</a></li>
             <?php endif ?>
             <?php if(!empty(session('login_date'))): ?>
+            <li><a class="btn btn-header" href="{{ route('members.mypage') }}">マイページへ</a></li>
+            <?php endif ?>
+            <?php if(!empty(session('login_date'))): ?>
             <form method="post" action="{{ route('members.logout') }}">
                 @csrf
                 <li><button style="background-color: #ffe4d2; font-size: 16px; height: 32px; vertical-align: center; line-height: 16px" type="submit" class="btn btn-header">ログアウト</button></li>

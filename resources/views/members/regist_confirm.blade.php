@@ -62,7 +62,7 @@
                 <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
             </div>
             <div class="form-group btn-wrapper">
-                <a class="btn btn-back" href="index.php" >トップに戻る</a>
+                <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
             </div>
         </form>
     </div>

@@ -129,4 +129,12 @@ class MemberController extends Controller
         session()->put('name_mei', $member->name_mei);
         return redirect('/');
     }
+
+    public function mypage()
+    {
+        $id = session()->get('member_id');
+        $member = Member::where('id', $id)->first();
+//        dd($member);
+        return view('members.mypage', ['member' => $member]);
+    }
 }
