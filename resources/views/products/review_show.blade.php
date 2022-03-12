@@ -78,7 +78,7 @@
                 @foreach($reviews as $review)
                     <div class="review-card">
                         <div class="form-group" style="display: flex">
-                            <div class="form-inline" style="width: 150px; font-weight: bold">{{ $review->member->name_sei.$review->member->name_mei }}</div>
+                            <div class="form-inline" style="width: 150px; font-weight: bold">{{ $review->member->nickname }}さん</div>
                             <div class="form-inline" style="width: 500px">
                                     @if($review->evaluation == 0))
                                         <i class="far fa-star"></i>
