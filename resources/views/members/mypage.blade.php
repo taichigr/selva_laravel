@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="form-group" style="text-align: center; margin-top: 30px; margin-bottom: 30px">
-                    <a class="btn btn-default-blue" href="">会員情報変更</a>
+                    <a class="btn btn-default-blue" href="{{ route('members.editmemberinfoshow') }}">会員情報変更</a>
                 </div>
 
                 <div class="form-group">

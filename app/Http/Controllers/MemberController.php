@@ -148,16 +148,36 @@ class MemberController extends Controller
     }
     public function withdrawcomplete()
     {
-//        session()->put('login_date', Carbon::now());
-//        session()->put('login_limit', 60*60);
-//        session()->put('member_id', $member->id);
-//        session()->put('name_sei', $member->name_sei);
-//        session()->put('name_mei', $member->name_mei);
         $member = Member::where('id', session()->get('member_id'))->first();
         $member->deleted_at = Carbon::now();
         $member->save();
         session()->flush();
         return redirect('/');
+    }
 
+    public function editmemberinfoshow()
+    {
+        $member = Member::where('id', session()->get('member_id'))->first();
+        return view('members.edit.member_info', ['member' => $member]);
+    }
+    public function editmemberinfoconfirm(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name_sei' => 'required|string|max:20',
+            'name_mei' => 'required|string|max:20',
+            'nickname' => 'required|string|max:10',
+            'gender' => 'required|in:1,2',
+        ]);
+        return view('members.edit.member_info_confirm', ['member' => $validatedData]);
+    }
+    public function editmemberinfocomplete(Request $request)
+    {
+        $member = Member::where('id', session()->get('member_id'))->first();
+        $member->name_sei = $request->name_sei;
+        $member->name_mei = $request->name_mei;
+        $member->nickname = $request->nickname;
+        $member->gender = $request->gender;
+        $member->save();
+        return redirect('/');
     }
 }

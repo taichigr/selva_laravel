@@ -32,6 +32,12 @@ Route::prefix('members')->name('members.')->group(function () {
     Route::post('/withdraw/complete','MemberController@withdrawcomplete' )->name('withdrawcomplete')->middleware('authMember');
 
 
+    // 編集関連
+    Route::get('/mypage/edit/memberinfo', 'MemberController@editmemberinfoshow')->name('editmemberinfoshow')->middleware('authMember');
+    Route::post('/mypage/edit/memberinfoconfirm', 'MemberController@editmemberinfoconfirm')->name('editmemberinfoconfirm')->middleware('authMember');
+    Route::post('/mypage/edit/editmemberinfocomplete', 'MemberController@editmemberinfocomplete')->name('editmemberinfocomplete')->middleware('authMember');
+
+
 });
 Route::get('/', 'MemberController@index')->name('index');
 
