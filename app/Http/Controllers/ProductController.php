@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Product;
+use App\Review;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -181,16 +182,83 @@ class ProductController extends Controller
         ]);
     }
 
-    public function detail(Request $request)
+    public function detail(Request $request, Review $review)
     {
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
         $id = $request->id;
         $product = Product::where('id', $id)->first();
+        $average = $review->where('product_id', $id)->avg('evaluation');
+
         return view('products.detail', [
             'product' => $product,
             'product_categories' => $product_categories,
-            'product_subcategories' => $product_subcategories
+            'product_subcategories' => $product_subcategories,
+            'average' => $average
         ]);
+    }
+
+    public function reviewregist(Request $request,Review $review)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        $id = $request->id;
+        $product = Product::where('id', $id)->first();
+        $average = $review->where('product_id', $id)->avg('evaluation');
+        return view('products.review', [
+            'product' => $product,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'average' => $average
+        ]);
+    }
+
+    public function reviewconfirm(Request $request, Review $review)
+    {
+//        $member_id = session()->get('member_id');
+        $this->validate($request, [
+            'product_id' => 'required',
+            'evaluation' => 'required|in:1,2,3,4,5',
+            'comment' => 'required|max:500',
+        ]);
+//        dd($request);
+        $product_id = $request->product_id;
+        $evaluation = $request->evaluation;
+        $comment = $request->comment;
+
+        $product = Product::where('id', $product_id)->first();
+        $average = $review->where('product_id', $product_id)->avg('evaluation');
+
+
+        return view('products.review_confirm',[
+            'product_id' => $product_id,
+            'evaluation' => $evaluation,
+            'comment' => $comment,
+            'product' => $product,
+            'average' => $average
+            ]);
+    }
+
+    public function reviewstore(Request $request, Review $review)
+    {
+//        dd($request);
+        $product_id = $request->product_id;
+        $review->member_id = session()->get('member_id');
+        $review->product_id = $request->product_id;
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+        $review->save();
+        return view('products.review_complete',['product_id' => $product_id]);
+    }
+
+    public function reviewshow(Request $request, Review $review, Product $product)
+    {
+//        dd($request->product_id);
+        $returnproduct = $product->where('id', $request->product_id)->first();
+        $reviews = $review->where('product_id', $request->product_id)
+            ->orderBy('id', 'desc')
+            ->paginate(6);
+        $average = $review->where('product_id', $request->product_id)->avg('evaluation');
+        return view('products.review_show', ['reviews' => $reviews, 'average' => $average, 'product' => $returnproduct]);
     }
 }

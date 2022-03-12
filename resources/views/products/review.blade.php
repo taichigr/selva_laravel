@@ -2,13 +2,14 @@
 <?php
 //dd($return_product_category_id);
 //dd($products);
+    // レビュー登録
 ?>
 
-@section('title', '商品詳細')
+@section('title', '商品レビュー登録')
 @section('content')
     <header class="header">
         <div class="header-left">
-            <h2 style="height: 60px; line-height: 60px;">商品詳細</h2>
+            <h2 style="height: 60px; line-height: 60px;">商品レビュー登録</h2>
         </div>
         <div class="header-right">
             <ul>
@@ -21,108 +22,104 @@
         <div style="margin: 20px"></div>
         <div class="container" style="width: 900px; border: none; box-sizing: border-box; padding: 20px">
 
-
-
-            <div class="form-group">
-                <div class="form-inline">
-                    @foreach($product_categories as $product_category)
-                        @if($product_category->id == $product->product_category_id)
-                            <p>{{ $product_category->name }} ＞
-                                @endif
-                                @endforeach
-                                {{--                        小カテゴリーをjQueryで生成--}}
-                                @foreach($product_subcategories as $product_subcategory)
-                                    @if($product_subcategory->id == $product->product_subcategory_id)
-                                        {{ $product_subcategory->name }}</p>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div>
-                    <h2 style="text-align: left; display: inline; font-size: 20px">{{ $product->name }}</h2>
-                    <p style="display: inline">　　　　　更新日時：{{ $product->updated_at->format('Ymd') }}</p>
-                </div>
-            </div>
-
-            <div class="detail-image-area">
-                <div class="detail-image-wrapper">
+            <div class="review-product-data-area">
+                <div class="review-image-wrapper">
                     <img src="{{ !empty($product->image_1) ? "/uploads/".$product->image_1: '' }}" alt="">
                 </div>
-                <div class="detail-image-wrapper">
-                    <img src="{{ !empty($product->image_2) ? "/uploads/".$product->image_2: '' }}" alt="">
-                </div>
-                <div class="detail-image-wrapper">
-                    <img src="{{ !empty($product->image_3) ? "/uploads/".$product->image_3: '' }}" alt="">
-                </div>
-                <div class="detail-image-wrapper">
-                    <img src="{{ !empty($product->image_4) ? "/uploads/".$product->image_4: '' }}" alt="">
-                </div>
-            </div>
+
+                <div class="form-group" style="padding-top: 20px">
+                    <div>
+                        <h2 style="text-align: left">{{ $product->name }}</h2>
+                    </div>
+                    <div style="margin-top: 10px">
+                        総合評価　
+                        {{--                    塗りつぶし用 <i class="fas fa-star"></i>--}}
+                        {{--                    空欄用 <i class="far fa-star"></i>--}}
+                        {{--                    半分 <i class="fas fa-star-half-alt"></i>--}}
 
 
-            <div class="form-group" style="padding-top: 20px">
-                <div>■商品説明</div>
-                <div style="margin-top: 10px">
-                    {!! nl2br(e($product->product_content)) !!}
-{{--                    {{ $product->product_content }}--}}
-                </div>
-            </div>
-
-            <div class="form-group" style="padding-top: 20px">
-                <div>■商品レビュー</div>
-                <div style="margin-top: 10px">
-                    総合評価　
-                    {{--                    塗りつぶし用 <i class="fas fa-star"></i>--}}
-                    {{--                    空欄用 <i class="far fa-star"></i>--}}
-                    {{--                    半分 <i class="fas fa-star-half-alt"></i>--}}
-
-
-                    @if(!empty($average))
-                        @if((ceil($average) == 0))
-                            <i class="far fa-star"></i>
-                        @elseif(ceil($average) == 1)
-                            <i class="fas fa-star"></i>
-                        @elseif((ceil($average) == 2))
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        @elseif((ceil($average) == 3))
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        @elseif((ceil($average) == 4))
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        @elseif((ceil($average) == 5))
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        @if(!empty($average))
+                            @if((ceil($average) == 0))
+                                <i class="far fa-star"></i>
+                            @elseif(ceil($average) == 1)
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 2))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 3))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 4))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 5))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @endif
+                            {{ ceil($average) }}
+                        @else
+                            レビュー無し
                         @endif
-                        {{ ceil($average) }}
-                    @else
-                        レビュー無し
+                    </div>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('products.reviewconfirm') }}">
+                @csrf
+                <div class="err-msg">
+                    @if ($errors->any())
+                        <div class="card-text text-left alert alert-danger">
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
                 </div>
-                <div style="margin-top: 10px">
-                    <a style="color: #406bca" href="{{ route('products.reviewshow', ['product_id' => $product->id]) }}">＞＞レビューを見る</a>
-                </div>
-            </div>
+                <input type="hidden" name="product_id" value="{{$product->id}}">
+                <div class="review-input-area">
+                    <div class="form-group" style="display: flex;">
+                        <div class="form-inline" style="width: 150px;">商品評価</div>
+                        <div class="form-inline" style="width: 300px;">
+                            <select style="width: 100px" name="evaluation">
+                                <option value="1" {{ old('evaluation') == '1'? 'selected':'' }}>1</option>
+                                <option value="2" {{ old('evaluation') == '2'? 'selected':'' }}>2</option>
+                                <option value="3" {{ old('evaluation') == '3'? 'selected':'' }}>3</option>
+                                <option value="4" {{ old('evaluation') == '4'? 'selected':'' }}>4</option>
+                                <option value="5" {{ old('evaluation') == '5'? 'selected':'' }}>5</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <div style="text-align: right">
-                <div class="inline">
-                    <div class="btn-wrapper-detail">
-                        <a class="btn btn-back-blue" href="{{ route('products.reviewregist', ['id' => $product->id]) }}" >この商品についてのレビューを登録</a>
-                    </div>
-                    <div class="btn-wrapper-detail">
-                        <a class="btn btn-default" style="color: #fff; background-color: #406bca" href="{{ url()->previous() }}" >商品一覧に戻る</a>
+                    <div class="form-group" style="display: flex;">
+                        <div class="form-inline" style="width: 150px;">商品コメント</div>
+                        <div class="form-inline" style="width: 500px;">
+                            <textarea name="comment" id="" style="width: 400px; height: 200px">{{ old('comment') }}</textarea>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+
+                <div style="text-align: center">
+                    <div class="inline">
+                        <div class="btn-wrapper-detail">
+                            <input type="submit" class="btn btn-default" style="color: #fff; background-color: #406bca" href="{{ route('products.reviewconfirm') }}" value="商品レビュー登録確認">
+                        </div>
+                        <div class="btn-wrapper-detail">
+                            <a class="btn btn-back-blue" href="{{ url()->previous() }}" >商品詳細に戻る</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
 
 
         </div>
@@ -268,37 +265,6 @@
                     }
                 })
             });
-
-            // 画像ファイルにあげ、それをそのまま表示
-            // $('.js-image-uploader1').on('change', function (e) {
-            //     console.log('this');
-            //     let reader = new FileReader();
-            //     reader.onload = function (e) {
-            //         $('.js-preview1').attr('src', e.target.result)
-            //     }
-            //     reader.readAsDataURL(e.target.files[0]);
-            // });
-            // $('.js-image-uploader2').on('change', function (e) {
-            //     let reader = new FileReader();
-            //     reader.onload = function (e) {
-            //         $('.js-preview2').attr('src', e.target.result)
-            //     }
-            //     reader.readAsDataURL(e.target.files[0]);
-            // });
-            // $('.js-image-uploader3').on('change', function (e) {
-            //     let reader = new FileReader();
-            //     reader.onload = function (e) {
-            //         $('.js-preview3').attr('src', e.target.result)
-            //     }
-            //     reader.readAsDataURL(e.target.files[0]);
-            // });
-            // $('.js-image-uploader4').on('change', function (e) {
-            //     let reader = new FileReader();
-            //     reader.onload = function (e) {
-            //         $('.js-preview4').attr('src', e.target.result)
-            //     }
-            //     reader.readAsDataURL(e.target.files[0]);
-            // });
 
             $('form').submit(function () {
                 $(this).find(':submit').prop('disabled', 'true');

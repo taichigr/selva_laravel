@@ -24,9 +24,11 @@ return [
     'before'               => ':attributeには、:dateより前の日付をご利用ください。',
     'before_or_equal'      => ':attributeには、:date以前の日付をご利用ください。',
     'between'              => [
-        'numeric' => ':attributeは、:minから:maxの間で指定してください。',
+//        'numeric' => ':attributeは、:minから:maxの間で指定してください。',
+        'numeric' => ':attributeに不正な値が入りました。',
         'file'    => ':attributeは、:min kBから、:max kBの間で指定してください。',
-        'string'  => ':attributeは、:min文字から、:max文字の間で指定してください。',
+        'string' => ':attributeに不正な値が入りました。',
+//        'string'  => ':attributeは、:min文字から、:max文字の間で指定してください。',
         'array'   => ':attributeは、:min個から:max個の間で指定してください。',
     ],
     'boolean'              => ':attributeは、trueかfalseを指定してください。',
@@ -146,7 +148,8 @@ return [
     */
 
     'attributes' => [
-        'password' => 'パスワード'
+        'password' => 'パスワード',
+        'evaluation' => '商品評価'
     ],
 
 ];

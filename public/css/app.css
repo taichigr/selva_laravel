@@ -642,3 +642,29 @@ td {
   width: 100%;
 }
 
+.btn-wrapper-detail {
+  margin-top: 30px;
+}
+
+.btn-back-blue {
+  color: #406bca;
+  background-color: #fff;
+  border: 1px solid #406bca;
+}
+
+.review-product-data-area {
+  width: 900px;
+  display: flex;
+  padding-bottom: 20px;
+  border-bottom: 1px #000 solid;
+}
+
+.review-image-wrapper {
+  width: 200px;
+  margin: 10px;
+}
+
+.review-card {
+  border-bottom: #000 1px solid;
+}
+

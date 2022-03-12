@@ -26,8 +26,8 @@ class ProductRequest extends FormRequest
         return [
             //
             'name' => 'required|string|max:100',
-            'product_category_id' => 'required|string|max:10',
-            'product_subcategory_id' => 'required|string|max:10',
+            'product_category_id' => 'required|string|in:1,2,3,4,5',
+            'product_subcategory_id' => 'required|string|in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25',
             'image_1' => 'max:500',
             'image_2' => 'max:500',
             'image_3' => 'max:500',

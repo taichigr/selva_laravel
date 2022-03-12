@@ -51,12 +51,18 @@ Route::prefix('products')->name('products.')->group(function () {
 
     Route::post('/regist/productstore', 'ProductController@productStore')->name('productStore')->middleware('authMember');
 
-
     Route::get('/show', 'ProductController@show')->name('show');
 
     Route::get('/show/detail', 'ProductController@detail')->name('detail');
 
     Route::get('/show/search', 'ProductController@search')->name('search');
+
+    Route::get('/review', 'ProductController@reviewregist')->name('reviewregist')->middleware('authMember');
+    Route::post('/review/confirm', 'ProductController@reviewconfirm')->name('reviewconfirm')->middleware('authMember');
+
+    Route::post('/review/store', 'ProductController@reviewstore')->name('reviewstore')->middleware('authMember');
+
+    Route::get('/review/show', 'ProductController@reviewshow')->name('reviewshow');
 
 });
 
