@@ -117,6 +117,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/members/editconfirm', 'AdministerController@membereditconfirm')->name('membereditconfirm')->middleware('authAdmin');
     Route::post('/members/editcomplete', 'AdministerController@membereditcomplete')->name('membereditcomplete')->middleware('authAdmin');
 
+    // 管理者　会員詳細
+    Route::get('/members/detail', 'AdministerController@memberdetailshow')->name('memberdetailshow')->middleware('authAdmin');
+    Route::post('/members/delete', 'AdministerController@memberdelete')->name('memberdelete')->middleware('authAdmin');
+
+
 
 });
 

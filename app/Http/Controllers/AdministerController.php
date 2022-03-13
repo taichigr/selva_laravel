@@ -310,9 +310,21 @@ class AdministerController extends Controller
             $member->save();
             return redirect('admin/members/show');
         }
+    }
 
 
+    public function memberdetailshow(Request $request)
+    {
+        $member = Member::where('id', $request->member_id)->first();
+        return view('admin.members.detail', ['member' => $member]);
+    }
 
+    public function memberdelete(Request $request)
+    {
+        $member = Member::where('id', $request->member_id)->first();
+        $member->deleted_at = Carbon::now();
+        $member->save();
+        return redirect('admin/members/show');
     }
 
 }

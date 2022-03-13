@@ -77,7 +77,7 @@
                         </tr>
                     </table>
                     <div class="btn-wrapper">
-                        <input class="btn btn-admin-member" type="submit" value="検索する">
+                        <input class="btn btn-back-blue" type="submit" value="検索する">
                     </div>
                 </form>
             </div>
@@ -109,7 +109,11 @@
                         @foreach($members as $member)
                             <tr>
                                 <td>{{ $member->id }}</td>
-                                <td>{{ $member->name_sei }}　{{ $member->name_mei }}</td>
+                                <td>
+                                    <a href="{{ route('admin.membereditshow', ['member_id'=> $member->id]) }}">
+                                        {{ $member->name_sei }}　{{ $member->name_mei }}
+                                    </a>
+                                </td>
                                 <td>{{ $member->email }}</td>
                                 <td>
                                     @if($member->gender == "1")
@@ -120,7 +124,7 @@
                                 </td>
                                 <td>{{ $member->created_at->format('Y/m/d') }}</td>
                                 <td><a href="{{ route('admin.membereditshow', ['member_id'=> $member->id]) }}">編集</a></td>
-                                <td><a href="">詳細</a></td>
+                                <td><a href="{{ route('admin.memberdetailshow', ['member_id' => $member->id]) }}">詳細</a></td>
                             </tr>
                         @endforeach
                     @endif
