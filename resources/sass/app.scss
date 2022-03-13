@@ -144,6 +144,7 @@ main {
 }
 .admin-container {
     border: none;
+    background-color: #dceaf8;
 }
 /*.container-thread-detail {*/
 /*    margin: 0 auto;*/
@@ -176,6 +177,9 @@ main {
     border: none;
     border-radius: 10px;
     font-weight: bold;
+}
+.btn-admin-header {
+    background-color: #c1c1c1;
 }
 .btn:hover {
     cursor: pointer;

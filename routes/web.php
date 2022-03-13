@@ -95,6 +95,13 @@ Route::prefix('products')->name('products.')->group(function () {
 
     Route::get('/review/edit/deleteshow', 'ReviewController@revieweditdeleteshow')->name('revieweditdeleteshow')->middleware('authMember');
     Route::post('/review/edit/delete', 'ReviewController@revieweditdelete')->name('revieweditdelete')->middleware('authMember');
+});
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', 'AdministerController@index')->name('index');
+    Route::get('/login', 'AdministerController@loginshow')->name('loginshow')->middleware('authAdmin');
+    Route::post('/login', 'AdministerController@login')->name('login')->middleware('authAdmin');
+    Route::post('logout', 'AdministerController@logout')->name('logout')->middleware('authAdmin');
 
 });
 
