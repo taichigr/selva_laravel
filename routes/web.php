@@ -103,6 +103,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/login', 'AdministerController@login')->name('login')->middleware('authAdmin');
     Route::post('logout', 'AdministerController@logout')->name('logout')->middleware('authAdmin');
 
+    // 管理者　会員一覧表示と検索
+    Route::get('/members/show', 'AdministerController@membershow')->name('membershow')->middleware('authAdmin');
 });
 
 //Route::get('/mail', 'MailSendController@send');

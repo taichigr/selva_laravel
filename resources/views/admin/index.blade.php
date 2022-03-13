@@ -9,7 +9,7 @@
 @section('content')
     <header class="admin-header">
         <div class="header-left">
-            <h1>ヘッダーに管理画面メインメニュー</h1>
+            <h1>管理画面メインメニュー</h1>
 
         </div>
         <div class="header-right">
@@ -44,6 +44,9 @@
     <div class="container admin-container">
         <h2>トップページ</h2>
 
+        <div class="form-group">
+            <a class="btn btn-back-blue" href="{{ route('admin.membershow') }}">会員一覧</a>
+        </div>
     </div>
 </main>
 

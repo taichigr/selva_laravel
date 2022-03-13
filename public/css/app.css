@@ -678,3 +678,8 @@ td {
   background-color: #406bca;
 }
 
+.pagination .active {
+  background-color: #7d7d7d;
+  color: #fff;
+}
+
