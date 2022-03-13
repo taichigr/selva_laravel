@@ -99,6 +99,7 @@ class AdministerController extends Controller
             $created_at_flg = 'asc';
         }
 
+
         if(!empty($id)) {
             $query->where('id', $id);
             if(!empty($male)) {
@@ -106,13 +107,13 @@ class AdministerController extends Controller
                 if(!empty($female)) {
                     $query->orwhere('gender', $female);
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
                 } else {
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
@@ -121,7 +122,7 @@ class AdministerController extends Controller
                 if(!empty($female)) {
                     $query->where('gender', $female);
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
@@ -133,7 +134,13 @@ class AdministerController extends Controller
                 if(!empty($female)) {
                     $query->orwhere('gender', $female);
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
+                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                    }
+                } else {
+                    if(!empty($freeword)) {
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
@@ -142,13 +149,13 @@ class AdministerController extends Controller
                 if(!empty($female)) {
                     $query->where('gender', $female);
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
                 } else {
                     if(!empty($freeword)) {
-                        $query->orwhere('name_sei', 'like', '%'.$freeword.'%');
+                        $query->where('name_sei', 'like', '%'.$freeword.'%');
                         $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
                         $query->orwhere('email', 'like', '%'.$freeword.'%');
                     }
