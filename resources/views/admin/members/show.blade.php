@@ -43,6 +43,13 @@
     {{--    @include('layouts.admin_nav')--}}
     <main class="admin-main">
         <div class="container admin-container">
+
+            <div class="form-group">
+                <div class="btn-wrapper" style="text-align: left">
+                    <a class="btn btn-default-blue" href="{{ route('admin.memberregister') }}">会員登録</a>
+                </div>
+            </div>
+
             <div class="member-form-container">
 
 
@@ -112,6 +119,8 @@
                                     @endif
                                 </td>
                                 <td>{{ $member->created_at->format('Y/m/d') }}</td>
+                                <td><a href="{{ route('admin.membereditshow', ['member_id'=> $member->id]) }}">編集</a></td>
+                                <td><a href="">詳細</a></td>
                             </tr>
                         @endforeach
                     @endif
@@ -159,5 +168,12 @@
 
     </main>
 
+    <script>
+        $(function () {
+            $('form').submit(function () {
+                $(this).find(':submit').prop('disabled', 'true');
+            });
+        })
+    </script>
 
 @endsection

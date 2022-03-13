@@ -6,6 +6,8 @@ use App\Administer;
 use App\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdministerController extends Controller
 {
@@ -174,12 +176,143 @@ class AdministerController extends Controller
             'id_flg' => $id_flg,
             'created_at_flg' => $created_at_flg,
         ]);
-
-
-
-
 //        $members = Member::paginate(10);
 ////        dd($members);
 //        return view('admin.members.show', ['members' => $members]);
     }
+
+    public function memberregister()
+    {
+        return view('admin.members.edit');
+    }
+    public function memberregisterconfirm(Request $request)
+    {
+        $request->validate([
+            'name_sei' => 'required|string|max:20',
+            'name_mei' => 'required|string|max:20',
+            'nickname' => 'required|string|max:10',
+            'gender' => 'required|in:1,2',
+            'password' => 'required|string|regex:/^[0-9a-zA-Z_\.\-]+$/|max:20|confirmed',
+            'email' => 'required|string|max:200|email|unique:members'
+        ]);
+
+        return view('admin.members.edit_confirm', [
+            'name_sei' => $request->name_sei,
+            'name_mei' => $request->name_mei,
+            'nickname' => $request->nickname,
+            'gender' => $request->gender,
+            'password' => $request->password,
+            'email' => $request->email,
+            'member_register_flg' => true
+        ]);
+    }
+
+    public function memberregistercomplete(Request $request, Member $member)
+    {
+        $member->name_sei = $request->name_sei;
+        $member->name_mei = $request->name_mei;
+        $member->nickname = $request->nickname;
+        $member->gender = $request->gender;
+        $member->password = Hash::make($request->password);
+        $member->email = $request->email;
+        $member->save();
+
+        return redirect('/admin');
+    }
+
+    public function membereditshow(Request $request)
+    {
+        $member = Member::where('id', $request->member_id)->first();
+        return view('admin.members.edit', ['member' => $member]);
+    }
+
+
+    public function membereditconfirm(Request $request)
+    {
+        $targetMember = Member::where('id', $request->id)->first();
+
+        $id = $targetMember->id;
+
+        if(!empty($request->password)) {
+            $request->validate([
+                'name_sei' => 'required|string|max:20',
+                'name_mei' => 'required|string|max:20',
+                'nickname' => 'required|string|max:10',
+                'gender' => 'required|in:1,2',
+                'password' => 'required|string|regex:/^[0-9a-zA-Z_\.\-]+$/|max:20|confirmed',
+                'email' => [
+                    'required',
+                    'string',
+                    'max:200',
+                    'email',
+                    Rule::unique('members')->ignore($request->id, 'id'),
+                ],
+            ]);
+
+            return view('admin.members.edit_confirm', [
+                'name_sei' => $request->name_sei,
+                'name_mei' => $request->name_mei,
+                'nickname' => $request->nickname,
+                'gender' => $request->gender,
+                'password' => $request->password,
+                'email' => $request->email,
+                'id' => $id,
+                'member_register_flg' => false
+            ]);
+
+        } else {
+            $request->validate([
+                'name_sei' => 'required|string|max:20',
+                'name_mei' => 'required|string|max:20',
+                'nickname' => 'required|string|max:10',
+                'gender' => 'required|in:1,2',
+                'email' => [
+                    'required',
+                    'string',
+                    'max:200',
+                    'email',
+                    Rule::unique('members')->ignore($request->id, 'id'),
+                ],
+            ]);
+
+            return view('admin.members.edit_confirm', [
+                'name_sei' => $request->name_sei,
+                'name_mei' => $request->name_mei,
+                'nickname' => $request->nickname,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'id' => $id,
+                'member_register_flg' => false
+            ]);
+
+        }
+    }
+
+    public function membereditcomplete(Request $request)
+    {
+        if(!empty($request->password)) {
+            $member = Member::where('id', $request->id)->first();
+            $member->name_sei = $request->name_sei;
+            $member->name_mei = $request->name_mei;
+            $member->nickname = $request->nickname;
+            $member->gender = $request->gender;
+            $member->password = Hash::make($request->password);
+            $member->email = $request->email;
+            $member->save();
+            return redirect('admin/members/show');
+        } else {
+            $member = Member::where('id', $request->id)->first();
+            $member->name_sei = $request->name_sei;
+            $member->name_mei = $request->name_mei;
+            $member->nickname = $request->nickname;
+            $member->gender = $request->gender;
+            $member->email = $request->email;
+            $member->save();
+            return redirect('admin/members/show');
+        }
+
+
+
+    }
+
 }

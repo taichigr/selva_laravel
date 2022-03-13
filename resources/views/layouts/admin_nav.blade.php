@@ -18,7 +18,7 @@
             <?php endif ?>
 {{--            <li><a class="btn btn-header" href="">商品一覧</a></li>--}}
             <?php if(empty(session('admin_login_date'))): ?>
-            <li><a class="btn btn-admin-header" href="">ログイン</a></li>
+            <li><a style="border: solid 1px #000" class="btn btn-admin-header" href="">ログイン</a></li>
             <?php endif ?>
 
             <?php if(!empty(session('admin_login_date'))): ?>

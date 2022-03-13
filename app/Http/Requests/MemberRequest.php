@@ -23,14 +23,13 @@ class MemberRequest extends FormRequest
      */
     public function rules()
     {
-        // TODO バリデーション処理はうまく行っている　一部、要件を満たしていないので満たすこと
         return [
             //
             'name_sei' => 'required|string|max:20',
             'name_mei' => 'required|string|max:20',
             'nickname' => 'required|string|max:10',
             'gender' => 'required|in:1,2',
-            'password' => 'required|string|regex:/\A([a-zA-Z0-9]{8,})+\z/u|max:20|confirmed',
+            'password' => 'required|string|regex:/^[0-9a-zA-Z_\.\-]+$/|min:8|max:20|confirmed',
             'email' => 'required|string|max:200|email|unique:members'
         ];
     }

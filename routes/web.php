@@ -105,6 +105,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // 管理者　会員一覧表示と検索
     Route::get('/members/show', 'AdministerController@membershow')->name('membershow')->middleware('authAdmin');
+
+    // 管理　会員一覧からの会員追加登録
+    Route::get('/members/register', 'AdministerController@memberregister')->name('memberregister')->middleware('authAdmin');
+    Route::post('/members/registerconfirm', 'AdministerController@memberregisterconfirm')->name('memberregisterconfirm')->middleware('authAdmin');
+    Route::post('/members/registercomplete', 'AdministerController@memberregistercomplete')->name('memberregistercomplete')->middleware('authAdmin');
+
+
+    // // 管理　会員一覧からの編集
+    Route::get('/members/edit', 'AdministerController@membereditshow')->name('membereditshow')->middleware('authAdmin');
+    Route::post('/members/editconfirm', 'AdministerController@membereditconfirm')->name('membereditconfirm')->middleware('authAdmin');
+    Route::post('/members/editcomplete', 'AdministerController@membereditcomplete')->name('membereditcomplete')->middleware('authAdmin');
+
+
 });
 
 //Route::get('/mail', 'MailSendController@send');
