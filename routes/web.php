@@ -87,6 +87,15 @@ Route::prefix('products')->name('products.')->group(function () {
 
     Route::get('/review/show', 'ProductController@reviewshow')->name('reviewshow');
 
+    // プロダクトのレビューを編集
+    Route::get('/review/edit/management', 'ReviewController@revieweditmanagement')->name('revieweditmanagement')->middleware('authMember');
+    Route::get('/review/edit/show', 'ReviewController@revieweditshow')->name('revieweditshow')->middleware('authMember');
+    Route::post('/review/edit/confirm', 'ReviewController@revieweditconfirm')->name('revieweditconfirm')->middleware('authMember');
+    Route::post('/review/edit/complete', 'ReviewController@revieweditcomplete')->name('revieweditcomplete')->middleware('authMember');
+
+    Route::get('/review/edit/deleteshow', 'ReviewController@revieweditdeleteshow')->name('revieweditdeleteshow')->middleware('authMember');
+    Route::post('/review/edit/delete', 'ReviewController@revieweditdelete')->name('revieweditdelete')->middleware('authMember');
+
 });
 
 //Route::get('/mail', 'MailSendController@send');

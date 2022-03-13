@@ -149,7 +149,8 @@ return [
 
     'attributes' => [
         'password' => 'パスワード',
-        'evaluation' => '商品評価'
+        'evaluation' => '商品評価',
+        'comment' => 'コメント',
     ],
 
 ];
