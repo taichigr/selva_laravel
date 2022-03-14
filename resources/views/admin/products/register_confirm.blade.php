@@ -168,7 +168,6 @@
                                         <input type="hidden" name="image_4" value="{{ $image_4 }}">
                                         <input type="hidden" name="product_content" value="{{ $product_content }}">
                                     </form>
-                                    <input class="btn btn-back-blue" type="submit" value="前に戻る" form="resend">
                                 @else
                                     <form method="post" action="{{ route('admin.registFormre') }}" id="resend">
                                         @csrf

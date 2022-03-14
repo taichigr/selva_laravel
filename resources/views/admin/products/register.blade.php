@@ -79,7 +79,7 @@
                                                 <option value="{{ $product_category->id }}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
                                             @endforeach
                                         @endif
-                                    @elseif(!empty($product->product_category_id))
+                                    @elseif(!empty($product_category_id))
                                         @if(!empty($product_categories))
                                             @foreach($product_categories as $product_category)
                                                 <option value="{{ $product_category->id }}" {{ ($product_category_id == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
