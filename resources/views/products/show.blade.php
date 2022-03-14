@@ -21,7 +21,7 @@
     <main>
         <div class="container bg-color_white">
 
-            <form action="{{ route('products.search') }}">
+            <form method="get" action="{{ route('products.search') }}">
 
                 <div class="form-group">
                     カテゴリ
@@ -283,6 +283,9 @@
             $('form').submit(function () {
                 $(this).find(':submit').prop('disabled', 'true');
             });
+
+            $('')
+
         })
     </script>
 @endsection

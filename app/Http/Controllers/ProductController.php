@@ -188,7 +188,7 @@ class ProductController extends Controller
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         } else {
-            return redirect('products.show');
+            return redirect()->route('products.show');
         }
         return view('products.show', [
             'products' => $products,
@@ -198,7 +198,16 @@ class ProductController extends Controller
             'product_categories' => $product_categories,
             'product_subcategories' => $product_subcategories,
         ]);
-    }
+
+//            if(empty($product_category_id) && empty($product_subcategory_id) && empty($freeword)){
+//                $products = DB::table('products')->orderBy('id', 'desc')->paginate(10);
+//                return view('products.show', [
+//                    'products' => $products,
+//                    'product_categories' => $product_categories,
+//                    'product_subcategories' => $product_subcategories,
+//                ]);
+//            }
+        }
 
     public function detail(Request $request, Review $review)
     {
