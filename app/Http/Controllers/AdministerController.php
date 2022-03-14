@@ -519,7 +519,7 @@ class AdministerController extends Controller
     {
         $request->validate([
             'product_category_name' => 'required|max:20|unique:product_categories,name',
-            'product_subcategory_name1' => 'required|string|max:20',
+            'product_subcategory_name1' => 'required|string|max:20|unique:product_subcategories,name',
             'product_subcategory_name2' => 'max:20',
             'product_subcategory_name3' => 'max:20',
             'product_subcategory_name4' => 'max:20',
@@ -656,6 +656,7 @@ class AdministerController extends Controller
         $product_category->save();
         $product_category_id = $product_category->id;
 
+        Product_subcategory::where('product_category_id', $product_category_id)->delete();
 
         $product_subcategory1 = new Product_subcategory;
         $product_subcategory1->name = $request->product_subcategory_name1;
@@ -716,6 +717,26 @@ class AdministerController extends Controller
             $product_subcategory10->product_category_id = $product_category_id;
             $product_subcategory10->save();
         }
+        return redirect('admin/products/category/show');
+    }
+
+
+    public function productscategorydetail(Request $request)
+    {
+        $product_category = Product_category::where('id', $request->product_category_id)->first();
+        $product_subcategories = Product_subcategory::where('product_category_id', $request->product_category_id)
+            ->get();
+        return view('admin.products.category_detail', [
+            'product_category' => $product_category,
+            'product_subcategories' => $product_subcategories
+        ]);
+    }
+
+    public function productscategorydelete(Request $request)
+    {
+        Product_category::where('id', $request->product_category_id)->delete();
+        Product_subcategory::where('product_category_id', $request->product_category_id)->delete();
+
         return redirect('admin/products/category/show');
     }
 

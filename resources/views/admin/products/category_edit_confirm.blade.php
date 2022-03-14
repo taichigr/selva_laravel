@@ -56,8 +56,8 @@
                     <input type="hidden" name="product_subcategory_name10" value="{{ $product_subcategory_name10 }}">
 
                     <div class="form-group" style="margin-bottom: 20px">
-                        <lavel style="width: 180px; display: inline-block;">{{ $product_category_id }}</lavel>
-                        <span>登録後に自動採番</span>
+                        <lavel style="width: 180px; display: inline-block;">商品大カテゴリID</lavel>
+                        <span>{{ $product_category_id }}</span>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 20px">

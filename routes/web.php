@@ -133,6 +133,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/products/category/editconfirm', 'AdministerController@productscategoryeditconfirm')->name('productscategoryeditconfirm')->middleware('authAdmin');
     Route::post('/products/category/editcomplete', 'AdministerController@productscategoryeditcomplete')->name('productscategoryeditcomplete')->middleware('authAdmin');
 
+    // 管理者　商品カテゴリー一覧から商品カテゴリ詳細
+    Route::get('/products/category/detail', 'AdministerController@productscategorydetail')->name('productscategorydetail')->middleware('authAdmin');
+
+    // 管理者　商品カテゴリーの削除
+    Route::post('/products/category/delete', 'AdministerController@productscategorydelete')->name('productscategorydelete')->middleware('authAdmin');
+
+
     // 管理者商品カテゴリ一覧からの登録
     Route::get('/products/category/register', 'AdministerController@productscategoryregister')->name('productscategoryregister')->middleware('authAdmin');
     Route::post('/products/category/registerconfirm', 'AdministerController@productscategoryregisterconfirm')->name('productscategoryregisterconfirm')->middleware('authAdmin');
