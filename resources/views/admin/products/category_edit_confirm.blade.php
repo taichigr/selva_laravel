@@ -117,7 +117,7 @@
 
 
                     <div class="form-group btn-wrapper">
-                        <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <input class="btn btn-back-blue" type="submit" value="編集完了">
                     </div>
                 </form>
             @else
@@ -201,7 +201,7 @@
 
 
                     <div class="form-group btn-wrapper">
-                        <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <input class="btn btn-back-blue" type="submit" value="登録">
                     </div>
                 </form>
             @endif
