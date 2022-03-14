@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Administer;
 use App\Member;
 use App\Product_category;
+use App\Product_subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -465,29 +466,223 @@ class AdministerController extends Controller
     {
         return view('admin.products.category_edit');
     }
+
     public function productscategoryedit(Request $request)
     {
+        $product_category = Product_category::where('id', $request->product_category_id)->first();
+        $product_subcategories = Product_subcategory::where('product_category_id', $request->product_category_id)->get();
 
-        return view('admin.products.category_edit');
+        return view('admin.products.category_edit', [
+            'product_category' => $product_category,
+            'product_subcategories' => $product_subcategories,
+            'edit_flg' => true
+        ]);
     }
 
     public function productscategoryregisterconfirm(Request $request)
     {
-        dd($request);
         $request->validate([
-            'product_category_name' => 'required|string|max:20',
+            'product_category_name' => 'required|max:20|unique:product_categories,name',
             'product_subcategory_name1' => 'required|string|max:20',
-            'product_subcategory_name2' => 'string|max:20',
-            'product_subcategory_name3' => 'string|max:20',
-            'product_subcategory_name4' => 'string|max:20',
-            'product_subcategory_name5' => 'string|max:20',
-            'product_subcategory_name6' => 'string|max:20',
-            'product_subcategory_name7' => 'string|max:20',
-            'product_subcategory_name8' => 'string|max:20',
-            'product_subcategory_name9' => 'string|max:20',
-            'product_subcategory_name10' => 'string|max:20',
+            'product_subcategory_name2' => 'max:20',
+            'product_subcategory_name3' => 'max:20',
+            'product_subcategory_name4' => 'max:20',
+            'product_subcategory_name5' => 'max:20',
+            'product_subcategory_name6' => 'max:20',
+            'product_subcategory_name7' => 'max:20',
+            'product_subcategory_name8' => 'max:20',
+            'product_subcategory_name9' => 'max:20',
+            'product_subcategory_name10' => 'max:20',
+        ]);
+
+        return view('admin.products.category_edit_confirm', [
+            'product_category_name' => $request->product_category_name,
+            'product_subcategory_name1' => $request->product_subcategory_name1,
+            'product_subcategory_name2' => $request->product_subcategory_name2,
+            'product_subcategory_name3' => $request->product_subcategory_name3,
+            'product_subcategory_name4' => $request->product_subcategory_name4,
+            'product_subcategory_name5' => $request->product_subcategory_name5,
+            'product_subcategory_name6' => $request->product_subcategory_name6,
+            'product_subcategory_name7' => $request->product_subcategory_name7,
+            'product_subcategory_name8' => $request->product_subcategory_name8,
+            'product_subcategory_name9' => $request->product_subcategory_name9,
+            'product_subcategory_name10' => $request->product_subcategory_name10,
         ]);
     }
+
+    public function productscategoryeditconfirm(Request $request)
+    {
+        $request->validate([
+            'product_category_id' => 'required',
+            'product_category_name' => 'required|max:20',
+            'product_subcategory_name1' => 'required|string|max:20',
+            'product_subcategory_name2' => 'max:20',
+            'product_subcategory_name3' => 'max:20',
+            'product_subcategory_name4' => 'max:20',
+            'product_subcategory_name5' => 'max:20',
+            'product_subcategory_name6' => 'max:20',
+            'product_subcategory_name7' => 'max:20',
+            'product_subcategory_name8' => 'max:20',
+            'product_subcategory_name9' => 'max:20',
+            'product_subcategory_name10' => 'max:20',
+        ]);
+
+        return view('admin.products.category_edit_confirm', [
+            'product_category_id' => $request->product_category_id,
+            'product_category_name' => $request->product_category_name,
+            'product_subcategory_name1' => $request->product_subcategory_name1,
+            'product_subcategory_name2' => $request->product_subcategory_name2,
+            'product_subcategory_name3' => $request->product_subcategory_name3,
+            'product_subcategory_name4' => $request->product_subcategory_name4,
+            'product_subcategory_name5' => $request->product_subcategory_name5,
+            'product_subcategory_name6' => $request->product_subcategory_name6,
+            'product_subcategory_name7' => $request->product_subcategory_name7,
+            'product_subcategory_name8' => $request->product_subcategory_name8,
+            'product_subcategory_name9' => $request->product_subcategory_name9,
+            'product_subcategory_name10' => $request->product_subcategory_name10,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function productscategoryregistercomplete(Request $request, Product_category $product_category)
+    {
+        $product_category->name = $request->product_category_name;
+        $product_category->save();
+        $product_category_id = $product_category->id;
+
+
+        $product_subcategory1 = new Product_subcategory;
+        $product_subcategory1->name = $request->product_subcategory_name1;
+        $product_subcategory1->product_category_id = $product_category_id;
+        $product_subcategory1->save();
+
+        if(!empty($request->product_subcategory_name2)) {
+            $product_subcategory2 = new Product_subcategory;
+            $product_subcategory2->name = $request->product_subcategory_name2;
+            $product_subcategory2->product_category_id = $product_category_id;
+            $product_subcategory2->save();
+        }
+        if(!empty($request->product_subcategory_name3)) {
+            $product_subcategory3 = new Product_subcategory;
+            $product_subcategory3->name = $request->product_subcategory_name3;
+            $product_subcategory3->product_category_id = $product_category_id;
+            $product_subcategory3->save();
+        }
+        if(!empty($request->product_subcategory_name4)) {
+            $product_subcategory4 = new Product_subcategory;
+            $product_subcategory4->name = $request->product_subcategory_name4;
+            $product_subcategory4->product_category_id = $product_category_id;
+            $product_subcategory4->save();
+        }
+        if(!empty($request->product_subcategory_name5)) {
+            $product_subcategory5 = new Product_subcategory;
+            $product_subcategory5->name = $request->product_subcategory_name5;
+            $product_subcategory5->product_category_id = $product_category_id;
+            $product_subcategory5->save();
+        }
+        if(!empty($request->product_subcategory_name6)) {
+            $product_subcategory6 = new Product_subcategory;
+            $product_subcategory6->name = $request->product_subcategory_name6;
+            $product_subcategory6->product_category_id = $product_category_id;
+            $product_subcategory6->save();
+        }
+        if(!empty($request->product_subcategory_name7)) {
+            $product_subcategory7 = new Product_subcategory;
+            $product_subcategory7->name = $request->product_subcategory_name7;
+            $product_subcategory7->product_category_id = $product_category_id;
+            $product_subcategory7->save();
+        }
+        if(!empty($request->product_subcategory_name8)) {
+            $product_subcategory8 = new Product_subcategory;
+            $product_subcategory8->name = $request->product_subcategory_name8;
+            $product_subcategory8->product_category_id = $product_category_id;
+            $product_subcategory8->save();
+        }
+        if(!empty($request->product_subcategory_name9)) {
+            $product_subcategory9 = new Product_subcategory;
+            $product_subcategory9->name = $request->product_subcategory_name9;
+            $product_subcategory9->product_category_id = $product_category_id;
+            $product_subcategory9->save();
+        }
+        if(!empty($request->product_subcategory_name10)) {
+            $product_subcategory10 = new Product_subcategory;
+            $product_subcategory10->name = $request->product_subcategory_name10;
+            $product_subcategory10->product_category_id = $product_category_id;
+            $product_subcategory10->save();
+        }
+        return redirect('admin/products/category/show');
+    }
+
+    public function productscategoryeditcomplete(Request $request)
+    {
+        $product_category = Product_category::where('id', $request->product_category_id)->first();
+        $product_category->name = $request->product_category_name;
+        $product_category->save();
+        $product_category_id = $product_category->id;
+
+
+        $product_subcategory1 = new Product_subcategory;
+        $product_subcategory1->name = $request->product_subcategory_name1;
+        $product_subcategory1->product_category_id = $product_category_id;
+        $product_subcategory1->save();
+
+        if(!empty($request->product_subcategory_name2)) {
+            $product_subcategory2 = new Product_subcategory;
+            $product_subcategory2->name = $request->product_subcategory_name2;
+            $product_subcategory2->product_category_id = $product_category_id;
+            $product_subcategory2->save();
+        }
+        if(!empty($request->product_subcategory_name3)) {
+            $product_subcategory3 = new Product_subcategory;
+            $product_subcategory3->name = $request->product_subcategory_name3;
+            $product_subcategory3->product_category_id = $product_category_id;
+            $product_subcategory3->save();
+        }
+        if(!empty($request->product_subcategory_name4)) {
+            $product_subcategory4 = new Product_subcategory;
+            $product_subcategory4->name = $request->product_subcategory_name4;
+            $product_subcategory4->product_category_id = $product_category_id;
+            $product_subcategory4->save();
+        }
+        if(!empty($request->product_subcategory_name5)) {
+            $product_subcategory5 = new Product_subcategory;
+            $product_subcategory5->name = $request->product_subcategory_name5;
+            $product_subcategory5->product_category_id = $product_category_id;
+            $product_subcategory5->save();
+        }
+        if(!empty($request->product_subcategory_name6)) {
+            $product_subcategory6 = new Product_subcategory;
+            $product_subcategory6->name = $request->product_subcategory_name6;
+            $product_subcategory6->product_category_id = $product_category_id;
+            $product_subcategory6->save();
+        }
+        if(!empty($request->product_subcategory_name7)) {
+            $product_subcategory7 = new Product_subcategory;
+            $product_subcategory7->name = $request->product_subcategory_name7;
+            $product_subcategory7->product_category_id = $product_category_id;
+            $product_subcategory7->save();
+        }
+        if(!empty($request->product_subcategory_name8)) {
+            $product_subcategory8 = new Product_subcategory;
+            $product_subcategory8->name = $request->product_subcategory_name8;
+            $product_subcategory8->product_category_id = $product_category_id;
+            $product_subcategory8->save();
+        }
+        if(!empty($request->product_subcategory_name9)) {
+            $product_subcategory9 = new Product_subcategory;
+            $product_subcategory9->name = $request->product_subcategory_name9;
+            $product_subcategory9->product_category_id = $product_category_id;
+            $product_subcategory9->save();
+        }
+        if(!empty($request->product_subcategory_name10)) {
+            $product_subcategory10 = new Product_subcategory;
+            $product_subcategory10->name = $request->product_subcategory_name10;
+            $product_subcategory10->product_category_id = $product_category_id;
+            $product_subcategory10->save();
+        }
+        return redirect('admin/products/category/show');
+    }
+
 
 
 }

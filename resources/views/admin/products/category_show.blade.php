@@ -107,7 +107,7 @@
                                 <td>{{ $product_category->name }}</td>
 
                                 <td>{{ $product_category->created_at->format('Y/m/d') }}</td>
-                                <td><a href="{{ route('admin.productscategoryedit') }}">編集</a></td>
+                                <td><a href="{{ route('admin.productscategoryedit', ['product_category_id' => $product_category->id]) }}">編集</a></td>
                                 <td><a href="">詳細</a></td>
                             </tr>
                         @endforeach

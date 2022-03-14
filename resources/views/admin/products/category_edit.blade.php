@@ -4,7 +4,7 @@
 
 ?>
 
-@if(!empty($product_categories))
+@if(!empty($edit_flg))
     @section('title', '商品カテゴリ編集')
 @else
     @section('title', '商品カテゴリ登録')
@@ -37,11 +37,13 @@
 
     <main class="admin-main">
         <div class="container admin-container">
-            @if(!empty($product_categories))
-                <h2>会員編集</h2>
 
-                <form method="post" action="{{ route('admin.membereditconfirm') }}">
+            @if(!empty($edit_flg))
+                <h2>商品カテゴリ編集</h2>
+
+                <form method="post" action="{{ route("admin.productscategoryeditconfirm") }}">
                     @csrf
+                    <input type="hidden" name="product_category_id" value="{{ $product_category->id }}">
                     <div class="err-msg">
                         @if ($errors->any())
                             <div class="card-text text-left alert alert-danger">
@@ -52,22 +54,102 @@
                                 </ul>
                             </div>
                         @endif
-                        @if (!empty($err_msg))
-                            <div class="card-text text-left alert alert-danger">
-                                <ul class="mb-0">
-                                    <li>{{ $err_msg }}</li>
-                                </ul>
-                            </div>
-                            <?php $err_msg = '';?>
+                    </div>
+
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;">商品大カテゴリID</lavel>
+                        <span>{{ $product_category->id }}</span>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;">商品大カテゴリ</lavel>
+                        <input style="width: 260px;" type="text" name="product_category_name" required value="{{old('product_category_name') ?? $product_category->name}}">
+                    </div>
+
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;">商品小カテゴリ</lavel>
+                        <input style="width: 260px;" type="text" name="product_subcategory_name1" required value="{{old('product_subcategory_name1') ?? $product_subcategories[0]->name}}">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[1]))
+                        <input style="width: 260px;" type="text" name="product_subcategory_name2" value="{{ $product_subcategories[1]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name2" value="{{ old('product_subcategory_name2') }}">
                         @endif
                     </div>
 
-                    <div class="form-group">
-                        <lavel style="width: 115px; display: inline-block">商品第カテゴリID</lavel>
-                        @if(!empty(old('product_categories_id')))
-                            <input style="width: 260px;" type="text" name="email" required value="{{ old('product_categories_id') }}">
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[2]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name3" value="{{ $product_subcategories[2]->name }}">
                         @else
-                            <input style="width: 260px;" type="text" name="email" required value="">
+                            <input style="width: 260px;" type="text" name="product_subcategory_name3" value="{{ old('product_subcategory_name3') }}">
+                        @endif                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[3]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name4" value="{{ $product_subcategories[3]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name4" value="{{ old('product_subcategory_name4') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[4]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name5" value="{{ $product_subcategories[4]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name5" value="{{ old('product_subcategory_name5') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[5]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name6" value="{{ $product_subcategories[5]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name6" value="{{ old('product_subcategory_name6') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[6]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name7" value="{{ $product_subcategories[6]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name7" value="{{ old('product_subcategory_name7') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[7]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name8" value="{{ $product_subcategories[7]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name8" value="{{ old('product_subcategory_name8') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[8]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name9" value="{{ $product_subcategories[8]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name9" value="{{ old('product_subcategory_name9') }}">
+                        @endif
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px">
+                        <lavel style="width: 180px; display: inline-block;"></lavel>
+                        @if(!empty($product_subcategories[9]))
+                            <input style="width: 260px;" type="text" name="product_subcategory_name10" value="{{ $product_subcategories[9]->name }}">
+                        @else
+                            <input style="width: 260px;" type="text" name="product_subcategory_name10" value="{{ old('product_subcategory_name10') }}">
                         @endif
                     </div>
 
