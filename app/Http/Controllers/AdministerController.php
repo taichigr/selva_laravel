@@ -147,57 +147,88 @@ class AdministerController extends Controller
                 if(!empty($female)) {
                     $query->orwhere('gender', $female);
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
                 } else {
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
                 }
             } else {
                 if(!empty($female)) {
                     $query->where('gender', $female);
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
+                    }
+                } else {
+                    if(!empty($freeword)) {
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
                 }
             }
         } else {
             if(!empty($male)) {
-                $query->where('gender', $male);
+//                $query->where('gender', $male);
                 if(!empty($female)) {
-                    $query->orwhere('gender', $female);
+                    $query->where(function ($query) use ($male, $female) {
+                        $query->where('gender', $male);
+                        $query->orwhere('gender', $female);
+                    });
+//                    $query->orwhere('gender', $female);
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
+//                        dd($query->toSql());
                     }
                 } else {
+                    $query->where('gender', $male);
+
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
+//                    dd($query->toSql());
+
                 }
             } else {
                 if(!empty($female)) {
                     $query->where('gender', $female);
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
                 } else {
                     if(!empty($freeword)) {
-                        $query->where('name_sei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
-                        $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        $query->where(function($query) use ($freeword) {
+                            $query->where('name_sei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('name_mei', 'like', '%'.$freeword.'%');
+                            $query->orwhere('email', 'like', '%'.$freeword.'%');
+                        });
                     }
                 }
             }
@@ -436,15 +467,20 @@ class AdministerController extends Controller
             $query->where('id', $product_category_id);
             if(!empty($freeword)) {
                 $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
-                $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
-                $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
+                    $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+                });
+
 //                $query->groupBy('product_categories.name');
             }
         } else {
             if(!empty($freeword)) {
                 $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
-                $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
-                $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
+                    $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+                });
 //                $query->groupBy('product_categories.name');
             }
         }

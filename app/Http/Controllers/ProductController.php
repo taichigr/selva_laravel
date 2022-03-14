@@ -162,8 +162,10 @@ class ProductController extends Controller
             $products = $product->where([
                 'product_category_id' => $product_category_id,
                 'product_subcategory_id' => $product_subcategory_id,
-            ])->orwhere('name', 'like', '%'.$freeword.'%')
-                ->orwhere('product_content', 'like', '%'.$freeword.'%')
+            ])->where(function($query) use ($freeword) {
+                $query->orwhere('name', 'like', '%'.$freeword.'%')
+                    ->orwhere('product_content', 'like', '%'.$freeword.'%');
+            })
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         } elseif(!empty($product_category_id) && empty($product_subcategory_id) && empty($freeword)) {
@@ -176,10 +178,13 @@ class ProductController extends Controller
                 'product_subcategory_id' => $product_subcategory_id,
             ])->orderBy('id', 'desc')->paginate(10);
         } elseif (!empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {
-            $products = $product->where([
-                'product_category_id' => $product_category_id,
-            ])->orwhere('name', 'like', '%'.$freeword.'%')
-                ->orwhere('product_content', 'like', '%'.$freeword.'%')
+            $products = $product->where(
+                'product_category_id', $product_category_id
+            )
+                ->where(function($query) use ($freeword) {
+                    $query->orwhere('name', 'like', '%'.$freeword.'%')
+                        ->orwhere('product_content', 'like', '%'.$freeword.'%');
+                })
                 ->orderBy('id', 'desc')
                 ->paginate(10);
         } elseif (empty($product_category_id) && empty($product_subcategory_id) && !empty($freeword)) {

@@ -142,11 +142,11 @@
     </main>
 
     <script>
-        $(function () {
-            $('form').submit(function () {
-                $(this).find(':submit').prop('disabled', 'true');
-            });
-        })
+        // $(function () {
+        //     $('form').submit(function () {
+        //         $(this).find(':submit').prop('disabled', 'true');
+        //     });
+        // })
     </script>
 
 @endsection
