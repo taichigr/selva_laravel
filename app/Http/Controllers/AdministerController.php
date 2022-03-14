@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Administer;
 use App\Member;
+use App\Product_category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -66,6 +67,8 @@ class AdministerController extends Controller
     public function membershow(Request $request)
     {
 
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
 //        dd($request);
         $id = $request->id;
         $male = !empty($request->male) ? $request->male: null;
@@ -76,14 +79,48 @@ class AdministerController extends Controller
         $query->whereNull('deleted_at');
 //        dd($male);
         if(empty($id) && empty($male) && empty($female) && empty($freeword)) {
+
+            if(empty($id_flg) && empty($created_at_flg)){
+                $members = Member::orderBy('id','desc')->paginate(10);
+                return view('admin.members.show', [
+                    'members' => $members
+                ]);
+            } else {
+
+                $query = Member::query();
+                if($id_flg == 'asc') {
+                    $query->orderBy('id', 'asc');
+                    $id_flg = 'desc';
+                } elseif($id_flg == 'desc') {
+                    $query->orderBy('id', 'desc');
+                    $id_flg = 'asc';
+                }
+
+                if($created_at_flg == 'asc') {
+                    $query->orderBy('created_at', 'asc');
+                    $created_at_flg = 'desc';
+                } elseif($created_at_flg == 'desc') {
+                    $query->orderBy('created_at', 'desc');
+                    $created_at_flg = 'asc';
+                }
+                $members = $query->paginate(10);
+                return view('admin.members.show', [
+                    'members' => $members,
+                    'id' => $id,
+                    'male' => $male,
+                    'female' => $female,
+                    'freeword' => $freeword,
+                    'id_flg' => $id_flg,
+                    'created_at_flg' => $created_at_flg,
+                ]);
+            }
+
             $members = Member::orderBy('id', 'desc')->whereNull('deleted_at')->paginate(10);
 //        dd($members);
             return view('admin.members.show', ['members' => $members]);
         }
 
-        // falseのとき、desc。trueのとき、asc。
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
+
 
         if($id_flg == 'asc') {
             $query->orderBy('id', 'asc');
@@ -326,5 +363,103 @@ class AdministerController extends Controller
         $member->save();
         return redirect('admin/members/show');
     }
+
+
+
+    //=========================
+    // 商品関連
+    //=========================
+    public function productscategoryshow(Request $request)
+    {
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
+
+        $product_category_id = $request->product_category_id;
+        $freeword = $request->freeword;
+
+        $query = Product_category::query();
+
+        if(empty($product_category_id) && empty($freeword)) {
+            if(empty($id_flg) && empty($created_at_flg)){
+                $product_categories = $query
+                    ->orderBy('id','desc')
+                    ->paginate(10);
+                return view('admin.products.category_show', [
+                    'product_categories' => $product_categories
+                ]);
+            } else {
+                if($id_flg == 'asc') {
+                    $query->orderBy('product_categories.id', 'asc');
+                    $id_flg = 'desc';
+                } else {
+                    $query->orderBy('product_categories.id', 'desc');
+                    $id_flg = 'asc';
+                }
+
+                if($created_at_flg == 'asc') {
+                    $query->orderBy('created_at', 'asc');
+                    $created_at_flg = 'desc';
+                } else {
+                    $query->orderBy('created_at', 'desc');
+                    $created_at_flg = 'asc';
+                }
+
+                $product_categories = $query->paginate(10);
+                return view('admin.products.category_show', [
+                    'product_categories' => $product_categories,
+                    'product_category_id' => $product_category_id,
+                    'freeword' => $freeword,
+                    'id_flg' => $id_flg,
+                    'created_at_flg' => $created_at_flg
+                ]);
+            }
+        }
+
+        if($id_flg == 'asc') {
+            $query->orderBy('product_categories.id', 'asc');
+            $id_flg = 'desc';
+        } else {
+            $query->orderBy('product_categories.id', 'desc');
+            $id_flg = 'asc';
+        }
+
+        if($created_at_flg == 'asc') {
+            $query->orderBy('product_categories.created_at', 'asc');
+            $created_at_flg = 'desc';
+        } else {
+            $query->orderBy('product_categories.created_at', 'desc');
+            $created_at_flg = 'asc';
+        }
+
+        if(!empty($product_category_id)) {
+            $query->where('id', $product_category_id);
+            if(!empty($freeword)) {
+                $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
+                $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
+                $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+//                $query->groupBy('product_categories.name');
+            }
+        } else {
+            if(!empty($freeword)) {
+                $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
+                $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
+                $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
+//                $query->groupBy('product_categories.name');
+            }
+        }
+
+        $product_categories = $query
+            ->select('product_categories.*')->distinct()
+            ->paginate(10);
+//        dd($product_categories);
+        return view('admin.products.category_show', [
+            'product_categories' => $product_categories,
+            'product_category_id' => $product_category_id,
+            'freeword' => $freeword,
+            'id_flg' => $id_flg,
+            'created_at_flg' => $created_at_flg
+        ]);
+    }
+
 
 }
