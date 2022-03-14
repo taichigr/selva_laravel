@@ -598,9 +598,9 @@
             //     reader.readAsDataURL(e.target.files[0]);
             // });
 
-            $('form').submit(function () {
-                $(this).find(':submit').prop('disabled', 'true');
-            });
+            // $('form').submit(function () {
+            //     $(this).find(':submit').prop('disabled', 'true');
+            // });
         })
     </script>
 @endsection

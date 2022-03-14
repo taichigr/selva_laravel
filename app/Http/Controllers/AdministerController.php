@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Administer;
+use App\Http\Requests\ProductRequest;
 use App\Member;
 use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class AdministerController extends Controller
@@ -832,6 +835,215 @@ class AdministerController extends Controller
             'freeword' => $freeword,
             'id_flg' => $id_flg,
             'created_at_flg' => $created_at_flg
+        ]);
+    }
+
+
+    public function productsregistershow()
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('admin.products.register', [
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories
+        ]);
+    }
+
+    public function registImage(Request $request)
+    {
+        // 画像アップロード機能
+        $this->validate($request, [
+            'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_2' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        ]);
+        Log::info('バリデーション後', ['image_1の情報' => $request->all()]);
+//        return;
+        // バリデーションは通っているのか？そして、データはリクエストのどこに入っているのか
+        if ($file1 = $request->image_1) {
+            $fileName1 = time() . $file1->getClientOriginalName();
+            $target_path1 = public_path('uploads/');
+            $file1->move($target_path1, $fileName1);
+            return ['returnFileName1' => $fileName1];
+        } else {
+            $fileName1 = "";
+        }
+        if ($file2 = $request->image_2) {
+            $fileName2 = time() . $file2->getClientOriginalName();
+            $target_path2 = public_path('uploads/');
+            $file2->move($target_path2, $fileName2);
+            return ['returnFileName2' => $fileName2];
+        } else {
+            $fileName2 = "";
+        }
+        if ($file3 = $request->image_3) {
+            $fileName3 = time() . $file3->getClientOriginalName();
+            $target_path3 = public_path('uploads/');
+            $file3->move($target_path3, $fileName3);
+            return ['returnFileName3' => $fileName3];
+        } else {
+            $fileName3 = "";
+        }
+        if ($file4 = $request->image_4) {
+            $fileName4 = time() . $file4->getClientOriginalName();
+            $target_path4 = public_path('uploads/');
+            $file4->move($target_path4, $fileName4);
+            return ['returnFileName4' => $fileName4];
+        } else {
+            $fileName4 = "";
+        }
+    }
+
+    public function productregistercheck(ProductRequest $request)
+    {
+        //
+//        dd($request);
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        //ここの処理では画像のパスを保存
+//        管理者99999
+        $member_id = 99999;
+
+//        $product->save();
+        return view('admin.products.register_confirm', [
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'member_id' => $member_id,
+            'product_category_id' => $request->product_category_id,
+            'product_subcategory_id' => $request->product_subcategory_id,
+            'name' => $request->name,
+            'image_1' => $request->image_1,
+            'image_2' => $request->image_2,
+            'image_3' => $request->image_3,
+            'image_4' => $request->image_4,
+            'product_content' => $request->product_content,
+        ]);
+        // フォームリクエストでバリデーション
+        // 画像を保存して、パスと他のデータをDBに保存
+    }
+
+    public function productregisterstore(Request $request, Product $product)
+    {
+        $product->member_id = $request->member_id;
+        $product->product_category_id = $request->product_category_id;
+        $product->product_subcategory_id = $request->product_subcategory_id;
+        $product->name = $request->name;
+        $product->image_1 = $request->image_1;
+        $product->image_2 = $request->image_2;
+        $product->image_3 = $request->image_3;
+        $product->image_4 = $request->image_4;
+        $product->product_content = $request->product_content;
+        $product->save();
+        return redirect('admin/products/show');
+    }
+
+    public function producteditshow(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product = Product::where('id', $product_id)->first();
+//        dd($product);
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('admin.products.register', [
+            'product' => $product,
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function producteditcheck(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'product_category_id' => 'required|string',
+            'product_subcategory_id' => 'required|string',
+            'image_1' => 'max:500',
+            'image_2' => 'max:500',
+            'image_3' => 'max:500',
+            'image_4' => 'max:500',
+            'product_content' => 'required|string|max:500',
+        ]);
+//        dd($request);
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+
+        return view('admin.products.register_confirm', [
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'product_id' => $request->product_id,
+            'member_id' => $request->member_id,
+            'product_category_id' => $request->product_category_id,
+            'product_subcategory_id' => $request->product_subcategory_id,
+            'name' => $request->name,
+            'image_1' => $request->image_1,
+            'image_2' => $request->image_2,
+            'image_3' => $request->image_3,
+            'image_4' => $request->image_4,
+            'product_content' => $request->product_content,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function producteditstore(Request $request)
+    {
+        $product = Product::where('id', $request->product_id)->first();
+        $product->member_id = $request->member_id;
+        $product->product_category_id = $request->product_category_id;
+        $product->product_subcategory_id = $request->product_subcategory_id;
+        $product->name = $request->name;
+        $product->image_1 = $request->image_1;
+        $product->image_2 = $request->image_2;
+        $product->image_3 = $request->image_3;
+        $product->image_4 = $request->image_4;
+        $product->product_content = $request->product_content;
+        $product->save();
+        return redirect('admin/products/show');
+    }
+
+
+    public function registFormre(Request $request)
+    {
+
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('admin.products.register',[
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'resend_flg' => true,
+            'edit_flg' => false,
+            'member_id' => $request->member_id,
+            "name" => $request->name,
+            "product_category_id" => $request->product_category_id,
+            "product_subcategory_id" => $request->product_subcategory_id,
+            "image_1" => $request->image_1,
+            "image_2" => $request->image_2,
+            "image_3" => $request->image_3,
+            "image_4" => $request->image_4,
+            "product_content" => $request->product_content,
+        ]);
+    }
+
+    public function editFormre(Request $request)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('admin.products.register',[
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'resend_flg' => true,
+            'edit_flg' => true,
+            'product_id' => $request->product_id,
+            'member_id' => $request->member_id,
+            "name" => $request->name,
+            "product_category_id" => $request->product_category_id,
+            "product_subcategory_id" => $request->product_subcategory_id,
+            "image_1" => $request->image_1,
+            "image_2" => $request->image_2,
+            "image_3" => $request->image_3,
+            "image_4" => $request->image_4,
+            "product_content" => $request->product_content,
         ]);
     }
 

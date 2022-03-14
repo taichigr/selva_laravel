@@ -148,6 +148,25 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // 管理者商品一覧
     Route::get('/products/show', 'AdministerController@productsshow')->name('productsshow')->middleware('authAdmin');
 
+    // 管理者　商品登録
+    Route::get('/products/register', 'AdministerController@productsregistershow')->name('productsregistershow')->middleware('authAdmin');
+    Route::post('/products/registercheck', 'AdministerController@productregistercheck')->name('productregistercheck')->middleware('authAdmin');
+    Route::post('/products/registerstore', 'AdministerController@productregisterstore')->name('productregisterstore')->middleware('authAdmin');
+
+    // 管理者商品編集
+    Route::get('/products/edit', 'AdministerController@producteditshow')->name('producteditshow')->middleware('authAdmin');
+    Route::post('/products/editcheck', 'AdministerController@producteditcheck')->name('producteditcheck')->middleware('authAdmin');
+    Route::post('/products/editstore', 'AdministerController@producteditstore')->name('producteditstore')->middleware('authAdmin');
+
+    Route::post('/products/register/re', 'AdministerController@registFormre')->name('registFormre')->middleware('authAdmin');
+    Route::post('/products/edit/re', 'AdministerController@editFormre')->name('editFormre')->middleware('authAdmin');
+
+
+
+    // 画像保存のajax
+    Route::post('/regist/productimage', 'AdministerController@registImage')->name('registImage');
+
+
 
 
 
