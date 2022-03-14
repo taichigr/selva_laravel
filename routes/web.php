@@ -65,6 +65,10 @@ Route::prefix('products')->name('products.')->group(function () {
     Route::get('/regist', 'ProductController@registForm')->name('registForm')->middleware('authMember');
     Route::post('/regist', 'ProductController@regist')->name('regist')->middleware('authMember');
 
+    Route::post('/regist/re', 'ProductController@registFormre')->name('registFormre')->middleware('authMember');
+
+
+
     // ajax通信でサブカテゴリー情報をとる
     Route::get('/regist/getsubcategory/{categoryid}', 'ProductController@getSubCategories')->name('getSubCategories');
     //
@@ -123,6 +127,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // 管理者　商品カテゴリー一覧、検索
     Route::get('/products/category/show', 'AdministerController@productscategoryshow')->name('productscategoryshow')->middleware('authAdmin');
+
+    // 管理者商品カテゴリ一覧からの編集
+    Route::get('/products/category/edit', 'AdministerController@productscategoryedit')->name('productscategoryedit')->middleware('authAdmin');
+    // 管理者商品カテゴリ一覧からの登録
+    Route::get('/products/category/register', 'AdministerController@productscategoryregister')->name('productscategoryregister')->middleware('authAdmin');
+    Route::post('/products/category/registerconfirm', 'AdministerController@productscategoryregisterconfirm')->name('productscategoryregisterconfirm')->middleware('authAdmin');
+
+
 
 
 

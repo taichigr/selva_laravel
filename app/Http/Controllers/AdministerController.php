@@ -461,5 +461,33 @@ class AdministerController extends Controller
         ]);
     }
 
+    public function productscategoryregister()
+    {
+        return view('admin.products.category_edit');
+    }
+    public function productscategoryedit(Request $request)
+    {
+
+        return view('admin.products.category_edit');
+    }
+
+    public function productscategoryregisterconfirm(Request $request)
+    {
+        dd($request);
+        $request->validate([
+            'product_category_name' => 'required|string|max:20',
+            'product_subcategory_name1' => 'required|string|max:20',
+            'product_subcategory_name2' => 'string|max:20',
+            'product_subcategory_name3' => 'string|max:20',
+            'product_subcategory_name4' => 'string|max:20',
+            'product_subcategory_name5' => 'string|max:20',
+            'product_subcategory_name6' => 'string|max:20',
+            'product_subcategory_name7' => 'string|max:20',
+            'product_subcategory_name8' => 'string|max:20',
+            'product_subcategory_name9' => 'string|max:20',
+            'product_subcategory_name10' => 'string|max:20',
+        ]);
+    }
+
 
 }

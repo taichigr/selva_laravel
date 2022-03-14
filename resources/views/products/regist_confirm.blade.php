@@ -104,10 +104,22 @@
                 <div class="form-group btn-wrapper">
                     <input class="btn btn-default" type="submit" value="商品を登録する">
                 </div>
-                <div class="form-group btn-wrapper">
-                    <a class="btn btn-back" href="{{ route('index') }}" >トップに戻る</a>
-                </div>
             </form>
+            <form method="post" action="{{ route('products.registFormre') }}" id="resend">
+                @csrf
+                <input style="width: 260px;" type="hidden" name="name" required value="{{ $product->name }}">
+                <input type="hidden" name="product_category_id" value="{{ $product->product_category_id }}">
+                <input type="hidden" name="product_subcategory_id" value="{{ $product->product_subcategory_id }}">
+                <input type="hidden" name="image_1" value="{{ $product->image_1 }}">
+                <input type="hidden" name="image_2" value="{{ $product->image_2 }}">
+                <input type="hidden" name="image_3" value="{{ $product->image_3 }}">
+                <input type="hidden" name="image_4" value="{{ $product->image_4 }}">
+                <input type="hidden" name="product_content" value="{{ $product->product_content }}">
+            </form>
+            <div class="form-group btn-wrapper">
+                <input form="resend" class="btn btn-default" type="submit" value="前に戻る">
+            </div>
+
         </div>
     </main>
     <script>

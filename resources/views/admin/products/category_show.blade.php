@@ -47,6 +47,9 @@
     {{--    @include('layouts.admin_nav')--}}
     <main class="admin-main">
         <div class="container admin-container">
+            <div class="btn-wrapper" style="text-align: left; margin-bottom: 30px">
+                <a class="btn btn-default-blue" href="{{ route('admin.productscategoryregister') }}">商品カテゴリ登録</a>
+            </div>
 
 {{--            <div class="form-group">--}}
 {{--                <div class="btn-wrapper" style="text-align: left">--}}
@@ -104,7 +107,7 @@
                                 <td>{{ $product_category->name }}</td>
 
                                 <td>{{ $product_category->created_at->format('Y/m/d') }}</td>
-                                <td><a href="">編集</a></td>
+                                <td><a href="{{ route('admin.productscategoryedit') }}">編集</a></td>
                                 <td><a href="">詳細</a></td>
                             </tr>
                         @endforeach

@@ -21,6 +21,24 @@ class ProductController extends Controller
             'product_subcategories' => $product_subcategories
             ]);
     }
+    public function registFormre(Request $request)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('products.regist',[
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'resend_flg' => true,
+            "name" => $request->name,
+            "product_category_id" => $request->product_category_id,
+            "product_subcategory_id" => $request->product_subcategory_id,
+            "image_1" => $request->image_1,
+            "image_2" => $request->image_2,
+            "image_3" => $request->image_3,
+            "image_4" => $request->image_4,
+            "product_content" => $request->product_content,
+        ]);
+    }
     public function getSubCategories(Request $request)
     {
 
