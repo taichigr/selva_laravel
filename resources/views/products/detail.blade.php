@@ -116,10 +116,14 @@
             <div style="text-align: right">
                 <div class="inline">
                     <div class="btn-wrapper-detail">
+                        <?php if(!empty(session('login_date'))): ?>
                         <a class="btn btn-back-blue" href="{{ route('products.reviewregist', ['id' => $product->id]) }}" >この商品についてのレビューを登録</a>
+                        <?php endif; ?>
+
+
                     </div>
                     <div class="btn-wrapper-detail">
-                        <button class="btn btn-back" type="button" onclick="history.back()">商品一覧に戻る</button>
+                        <button class="btn btn-back-blue" type="button" onclick="history.back()">商品一覧に戻る</button>
                     </div>
                 </div>
             </div>

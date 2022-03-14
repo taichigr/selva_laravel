@@ -113,7 +113,7 @@
                             <input type="submit" class="btn btn-default" style="color: #fff; background-color: #406bca" href="{{ route('products.reviewconfirm') }}" value="商品レビュー登録確認">
                         </div>
                         <div class="btn-wrapper-detail">
-                            <button class="btn btn-back" type="button" onclick="history.back()">商品詳細に戻る</button>
+                            <button class="btn btn-back-blue" type="button" onclick="history.back()">商品詳細に戻る</button>
                         </div>
                     </div>
                 </div>
@@ -266,9 +266,9 @@
                 })
             });
 
-            $('form').submit(function () {
-                $(this).find(':submit').prop('disabled', 'true');
-            });
+            // $('form').submit(function () {
+            //     $(this).find(':submit').prop('disabled', 'true');
+            // });
         })
     </script>
 @endsection

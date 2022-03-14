@@ -109,7 +109,7 @@
                             <input type="submit" class="btn btn-default" style="color: #fff; background-color: #406bca" value="登録する">
                         </div>
                         <div class="btn-wrapper-detail">
-                            <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
+                            <button class="btn btn-back-blue" type="button" onclick="history.back()">前に戻る</button>
                         </div>
                     </div>
                 </div>

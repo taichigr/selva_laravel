@@ -83,8 +83,39 @@
                             {{ \App\Product::showProductCategoryName($product->product_category_id) }} > {{ \App\Product::showProductSubCategoryName($product->product_subcategory_id) }}
                         </p>
                     </div>
-                    <div class="name-area">
+                    <div class="name-area" style="color: #406bca">
                         {{ $product->name }}
+                    </div>
+                    <div class="name-area">
+                        <?php $average = \App\Review::where('product_id', $product->id)->avg('evaluation') ?>
+                        @if(!empty($average))
+                            @if((ceil($average) == 0))
+                                <i class="far fa-star"></i>
+                            @elseif(ceil($average) == 1)
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 2))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 3))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 4))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @elseif((ceil($average) == 5))
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            @endif
+                            {{ ceil($average) }}
+                        @else
+                            レビュー無し
+                        @endif
                     </div>
                     <div class="form-group btn-wrapper" style="text-align: right">
                         <a class="btn btn-back" style="border: 1px solid #406bca; background-color: #406bca;color: #fff" href="{{ route('products.detail', ['id' => $product->id]) }}" >詳細</a>

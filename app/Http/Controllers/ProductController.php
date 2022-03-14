@@ -289,7 +289,7 @@ class ProductController extends Controller
         $returnproduct = $product->where('id', $request->product_id)->first();
         $reviews = $review->where('product_id', $request->product_id)
             ->orderBy('id', 'desc')
-            ->paginate(6);
+            ->paginate(5);
         $average = $review->where('product_id', $request->product_id)->avg('evaluation');
         return view('products.review_show', ['reviews' => $reviews, 'average' => $average, 'product' => $returnproduct]);
     }
