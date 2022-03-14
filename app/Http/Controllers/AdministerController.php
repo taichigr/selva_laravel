@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Administer;
 use App\Member;
+use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
 use Carbon\Carbon;
@@ -740,6 +741,98 @@ class AdministerController extends Controller
         return redirect('admin/products/category/show');
     }
 
+    public function productsshow(Request $request)
+    {
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
 
+        $product_id = $request->product_id;
+        $freeword = $request->freeword;
+
+        $query = Product::query();
+
+        if(empty($product_id) && empty($freeword)) {
+            if(empty($id_flg) && empty($created_at_flg)){
+                $products = $query
+                    ->orderBy('id','desc')
+                    ->paginate(10);
+                return view('admin.products.show', [
+                    'products' => $products
+                ]);
+            } else {
+                if($id_flg == 'asc') {
+                    $query->orderBy('products.id', 'asc');
+                    $id_flg = 'desc';
+                } else {
+                    $query->orderBy('products.id', 'desc');
+                    $id_flg = 'asc';
+                }
+
+                if($created_at_flg == 'asc') {
+                    $query->orderBy('created_at', 'asc');
+                    $created_at_flg = 'desc';
+                } else {
+                    $query->orderBy('created_at', 'desc');
+                    $created_at_flg = 'asc';
+                }
+
+                $products = $query->paginate(10);
+                return view('admin.products.show', [
+                    'products' => $products,
+                    'product_id' => $product_id,
+                    'freeword' => $freeword,
+                    'id_flg' => $id_flg,
+                    'created_at_flg' => $created_at_flg
+                ]);
+            }
+        }
+
+        if($id_flg == 'asc') {
+            $query->orderBy('products.id', 'asc');
+            $id_flg = 'desc';
+        } else {
+            $query->orderBy('products.id', 'desc');
+            $id_flg = 'asc';
+        }
+
+        if($created_at_flg == 'asc') {
+            $query->orderBy('products.created_at', 'asc');
+            $created_at_flg = 'desc';
+        } else {
+            $query->orderBy('products.created_at', 'desc');
+            $created_at_flg = 'asc';
+        }
+
+
+        if(!empty($product_id)) {
+            $query->where('id', $product_id);
+            if(!empty($freeword)) {
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('products.name', 'like', '%'.$freeword.'%');
+                    $query->orWhere('products.product_content', 'like', '%'.$freeword.'%');
+                });
+
+//                $query->groupBy('product_categories.name');
+            }
+        } else {
+            if(!empty($freeword)) {
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('products.name', 'like', '%'.$freeword.'%');
+                    $query->orWhere('products.product_content', 'like', '%'.$freeword.'%');
+                });
+//                $query->groupBy('product_categories.name');
+            }
+        }
+
+        $products = $query->paginate(10);
+//        dd($product_categories);
+        return view('admin.products.show', [
+            'products' => $products,
+            'product_id' => $product_id,
+            'freeword' => $freeword,
+            'id_flg' => $id_flg,
+            'created_at_flg' => $created_at_flg
+        ]);
+    }
 
 }

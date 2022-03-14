@@ -145,6 +145,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/products/category/registerconfirm', 'AdministerController@productscategoryregisterconfirm')->name('productscategoryregisterconfirm')->middleware('authAdmin');
     Route::post('/products/category/registercomplete', 'AdministerController@productscategoryregistercomplete')->name('productscategoryregistercomplete')->middleware('authAdmin');
 
+    // 管理者商品一覧
+    Route::get('/products/show', 'AdministerController@productsshow')->name('productsshow')->middleware('authAdmin');
 
 
 

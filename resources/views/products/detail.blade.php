@@ -119,7 +119,7 @@
                         <a class="btn btn-back-blue" href="{{ route('products.reviewregist', ['id' => $product->id]) }}" >この商品についてのレビューを登録</a>
                     </div>
                     <div class="btn-wrapper-detail">
-                        <a class="btn btn-default" style="color: #fff; background-color: #406bca" href="{{ url()->previous() }}" >商品一覧に戻る</a>
+                        <button class="btn btn-back" type="button" onclick="history.back()">商品一覧に戻る</button>
                     </div>
                 </div>
             </div>

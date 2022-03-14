@@ -109,7 +109,7 @@
                             <input type="submit" class="btn btn-default" style="color: #fff; background-color: #406bca" value="登録する">
                         </div>
                         <div class="btn-wrapper-detail">
-                            <a class="btn btn-back-blue" href="{{ url()->previous() }}" >前に戻る</a>
+                            <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
                         </div>
                     </div>
                 </div>

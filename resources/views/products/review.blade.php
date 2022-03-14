@@ -113,7 +113,7 @@
                             <input type="submit" class="btn btn-default" style="color: #fff; background-color: #406bca" href="{{ route('products.reviewconfirm') }}" value="商品レビュー登録確認">
                         </div>
                         <div class="btn-wrapper-detail">
-                            <a class="btn btn-back-blue" href="{{ url()->previous() }}" >商品詳細に戻る</a>
+                            <button class="btn btn-back" type="button" onclick="history.back()">商品詳細に戻る</button>
                         </div>
                     </div>
                 </div>

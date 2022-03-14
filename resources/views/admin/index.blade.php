@@ -48,7 +48,10 @@
             <a class="btn btn-back-blue" href="{{ route('admin.membershow') }}">会員一覧</a>
         </div>
         <div class="form-group" style="margin-top: 30px">
-            <a class="btn btn-back-blue" href="{{ route('admin.productscategoryshow') }}">商品カテゴリー一覧</a>
+            <a class="btn btn-back-blue" href="{{ route('admin.productscategoryshow') }}">商品カテゴリ一覧</a>
+        </div>
+        <div class="form-group" style="margin-top: 30px">
+            <a class="btn btn-back-blue" href="{{ route('admin.productsshow') }}">商品一覧</a>
         </div>
     </div>
 </main>
