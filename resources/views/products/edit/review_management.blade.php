@@ -25,6 +25,9 @@
 
         <div style="margin: 20px"></div>
         <div class="container" style="border: none; width: 700px; box-sizing: border-box; padding: 0">
+            @if(empty($reviews[0]))
+                レビューを投稿していません。
+            @else
             @foreach($reviews as $review)
                 <div class="product-card" style="min-height: 280px">
                     <div class="product-card-left">
@@ -81,6 +84,7 @@
                     </div>
                 </div>
             @endforeach
+            @endif
         </div>
 
 {{--        @if(!empty($return_product_category_id) || !empty($return_product_subcategory_id) || !empty($freeword))--}}
