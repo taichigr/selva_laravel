@@ -73,8 +73,8 @@ class AdministerController extends Controller
     public function membershow(Request $request)
     {
 
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
 //        dd($request);
         $id = $request->id;
         $male = !empty($request->male) ? $request->male: null;
@@ -408,8 +408,8 @@ class AdministerController extends Controller
     //=========================
     public function productscategoryshow(Request $request)
     {
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
 
         $product_category_id = $request->product_category_id;
         $freeword = $request->freeword;
@@ -428,7 +428,7 @@ class AdministerController extends Controller
                 if($id_flg == 'asc') {
                     $query->orderBy('product_categories.id', 'asc');
                     $id_flg = 'desc';
-                } else {
+                } elseif($id_flg == 'desc') {
                     $query->orderBy('product_categories.id', 'desc');
                     $id_flg = 'asc';
                 }
@@ -436,7 +436,7 @@ class AdministerController extends Controller
                 if($created_at_flg == 'asc') {
                     $query->orderBy('created_at', 'asc');
                     $created_at_flg = 'desc';
-                } else {
+                } elseif($created_at_flg == 'desc') {
                     $query->orderBy('created_at', 'desc');
                     $created_at_flg = 'asc';
                 }
@@ -455,16 +455,16 @@ class AdministerController extends Controller
         if($id_flg == 'asc') {
             $query->orderBy('product_categories.id', 'asc');
             $id_flg = 'desc';
-        } else {
+        } elseif($id_flg == 'desc') {
             $query->orderBy('product_categories.id', 'desc');
             $id_flg = 'asc';
         }
 
         if($created_at_flg == 'asc') {
-            $query->orderBy('product_categories.created_at', 'asc');
+            $query->orderBy('created_at', 'asc');
             $created_at_flg = 'desc';
-        } else {
-            $query->orderBy('product_categories.created_at', 'desc');
+        } elseif($created_at_flg == 'desc') {
+            $query->orderBy('created_at', 'desc');
             $created_at_flg = 'asc';
         }
 
@@ -747,8 +747,8 @@ class AdministerController extends Controller
 
     public function productsshow(Request $request)
     {
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
 
         $product_id = $request->product_id;
         $freeword = $request->freeword;
@@ -1081,6 +1081,108 @@ class AdministerController extends Controller
         $product = Product::where('id', $request->product_id)->first();
         $product->delete();
         return redirect('admin/products/show');
+    }
+
+    public function productreviewshow(Request $request)
+    {
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
+        $review_id = $request->review_id;
+        $freeword = $request->freeword;
+//        dd($request);
+
+
+        $query = Review::query();
+
+        if(empty($review_id) && empty($freeword)) {
+            if(empty($id_flg) && empty($created_at_flg)){
+                $reviews = $query
+                    ->orderBy('id','desc')
+                    ->paginate(10);
+                return view('admin.reviews.show', [
+                    'reviews' => $reviews
+                ]);
+            } else {
+                if($id_flg == 'asc') {
+                    $query->orderBy('reviews.id', 'asc');
+                    $id_flg = 'desc';
+                } elseif($id_flg == 'desc') {
+                    $query->orderBy('reviews.id', 'desc');
+                    $id_flg = 'asc';
+                }
+
+                if($created_at_flg == 'asc') {
+                    $query->orderBy('created_at', 'asc');
+                    $created_at_flg = 'desc';
+                } elseif($created_at_flg == 'desc') {
+                    $query->orderBy('created_at', 'desc');
+                    $created_at_flg = 'asc';
+                }
+//                dd($request);
+//                dd($query->toSql());
+
+                $reviews = $query->paginate(10);
+                return view('admin.reviews.show', [
+                    'reviews' => $reviews,
+                    'review_id' => $review_id,
+                    'freeword' => $freeword,
+                    'id_flg' => $id_flg,
+                    'created_at_flg' => $created_at_flg
+                ]);
+            }
+        }
+
+        if($id_flg == 'asc') {
+            $query->orderBy('reviews.id', 'asc');
+            $id_flg = 'desc';
+        } elseif($id_flg == 'desc') {
+            $query->orderBy('reviews.id', 'desc');
+            $id_flg = 'asc';
+        }
+
+        if($created_at_flg == 'asc') {
+            $query->orderBy('created_at', 'asc');
+            $created_at_flg = 'desc';
+        } elseif($created_at_flg == 'desc') {
+            $query->orderBy('created_at', 'desc');
+            $created_at_flg = 'asc';
+        }
+
+        if(!empty($review_id)) {
+            $query->where('id', $review_id);
+            if(!empty($freeword)) {
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('reviews.comment', 'like', '%'.$freeword.'%');
+                });
+
+//                $query->groupBy('product_categories.name');
+            }
+        } else {
+            if(!empty($freeword)) {
+                $query->where(function($query) use ($freeword) {
+                    $query->orWhere('reviews.comment', 'like', '%'.$freeword.'%');
+                });
+//                dd($query->toSql());
+//                $query->groupBy('product_categories.name');
+            }
+        }
+
+        $reviews = $query->paginate(10);
+//        dd($product_categories);
+        return view('admin.reviews.show', [
+            'reviews' => $reviews,
+            'review_id' => $review_id,
+            'freeword' => $freeword,
+            'id_flg' => $id_flg,
+            'created_at_flg' => $created_at_flg
+        ]);
+
+
+
+//        $reviews = Review::orderBy('id','desc')->paginate(10);
+//        return view('admin.reviews.show', [
+//            'reviews' => $reviews
+//        ]);
     }
 
 }

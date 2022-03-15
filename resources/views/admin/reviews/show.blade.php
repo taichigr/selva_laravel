@@ -7,11 +7,11 @@
 //    dd($product_categories);
 ?>
 
-@section('title', '商品一覧')
+@section('title', '商品レビュー一覧')
 @section('content')
     <header class="admin-header">
         <div class="header-left">
-            <h1>商品一覧</h1>
+            <h1>商品レビュー一覧</h1>
 
         </div>
         <div class="header-right">
@@ -48,7 +48,7 @@
     <main class="admin-main">
         <div class="container admin-container">
             <div class="btn-wrapper" style="text-align: left; margin-bottom: 30px">
-                <a class="btn btn-default-blue" href="{{ route('admin.productsregistershow') }}">商品登録</a>
+                <a class="btn btn-default-blue" href="">商品登録</a>
             </div>
 
             {{--            <div class="form-group">--}}
@@ -60,11 +60,11 @@
             <div class="member-form-container">
 
 
-                <form id="product_categories-search" action="{{ route('admin.productsshow') }}" method="get">
+                <form id="product_review-search" action="{{ route('admin.productreviewshow') }}" method="get">
                     <table class="member-table">
                         <tr>
                             <td class="member-table-left">ID</td>
-                            <td class="member-table-right"><input type="text" name="product_id" value="{{ $product_id ?? '' }}"></td>
+                            <td class="member-table-right"><input type="text" name="review_id" value="{{ $review_id ?? '' }}"></td>
                         </tr>
 
 
@@ -90,29 +90,36 @@
                     <tr class="member-showtable-header">
                         <th>
                             ID
-                            <button name="id_flg" value="{{ !empty($id_flg) ?$id_flg: 'asc' }}" class="submit-order" type="submit" form="product_categories-search">▼</button>
+                            <button name="id_flg" value="{{ $id_flg ?? 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
                         </th>
-                        <th>商品名</th>
+                        <th>商品ID</th>
+                        <th>評価</th>
+                        <th>商品コメント</th>
                         <th>
                             登録日時
-                            <button name="created_at_flg" value="{{ !empty($created_at_flg) ?$created_at_flg: 'asc' }}" class="submit-order" type="submit" form="product_categories-search">▼</button>
+                            <button name="created_at_flg" value="{{ $created_at_flg ?? 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
                         </th>
                         <th>編集</th>
                         <th>詳細</th>
                     </tr>
-                    @if(!empty($products))
-                        @foreach($products as $product)
+                    @if(!empty($reviews))
+                        @foreach($reviews as $review)
                             <tr style="background-color: #fff">
-                                <td>{{ $product->id }}</td>
+                                <td>{{ $review->id }}</td>
+                                <td>{{ $review->product_id }}</td>
+                                <td>{{ $review->evaluation }}</td>
                                 <td>
-                                    <a href="{{ route('admin.productdetailshow', ['product_id' => $product->id]) }}">
-                                        {{ $product->name }}
-                                    </a>
+                                    @if(mb_strlen($review->comment) >= 7)
+                                        {{ mb_substr($review->comment,0,7) }}...
+                                    @else
+                                        {{ $review->comment }}
+                                    @endif
                                 </td>
 
-                                <td>{{ $product->created_at->format('Y/m/d') }}</td>
-                                <td><a href="{{ route('admin.producteditshow', ['product_id' => $product->id]) }}">編集</a></td>
-                                <td><a href="{{ route('admin.productdetailshow', ['product_id' => $product->id]) }}">詳細</a></td>
+
+                                <td>{{ $review->created_at->format('Y/m/d') }}</td>
+                                <td><a href="">編集</a></td>
+                                <td><a href="">詳細</a></td>
                             </tr>
                         @endforeach
                     @endif
@@ -124,7 +131,7 @@
         </div>
 
 
-        @if(!empty($product_id)||!empty($freeword)||!empty($id_flg)||!empty($created_at_flg))
+        @if(!empty($review_id)||!empty($freeword)||!empty($id_flg)||!empty($created_at_flg))
             <?php
             if(!empty($id_flg)) {
                 if($id_flg == 'desc') {
@@ -142,8 +149,8 @@
             }
             ?>
             <div class="pagination">
-                {{ $products->appends([
-                    'products' => $products,
+                {{ $reviews->appends([
+                    '$reviews' => $reviews,
                     'freeword' => $freeword,
                     'id_flg' => $id_flg,
                     'created_at_flg' => $created_at_flg])->links() }}
@@ -152,7 +159,7 @@
 
         @else
             <div class="pagination">
-                {{ $products->links() }}
+                {{ $reviews->links() }}
             </div>
 
         @endif

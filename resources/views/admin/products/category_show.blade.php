@@ -60,7 +60,7 @@
             <div class="member-form-container">
 
 
-                <form id="product_categories-search" action="" method="get">
+                <form id="product_categories-search" action="{{ route('admin.productscategoryshow') }}" method="get">
                     <table class="member-table">
                         <tr>
                             <td class="member-table-left">ID</td>
@@ -125,6 +125,22 @@
 
 
         @if(!empty($product_category_id)||!empty($freeword)||!empty($product_category_id)||!empty($id_flg)||!empty($created_at_flg))
+            <?php
+            if(!empty($id_flg)) {
+                if($id_flg == 'desc') {
+                    $id_flg = 'asc';
+                } elseif ($id_flg == 'asc') {
+                    $id_flg = 'desc';
+                }
+            }
+            if(!empty($created_at_flg)) {
+                if($created_at_flg == 'desc') {
+                    $created_at_flg = 'asc';
+                } elseif ($created_at_flg == 'asc') {
+                    $created_at_flg = 'desc';
+                }
+            }
+            ?>
             <div class="pagination">
                 {{ $product_categories->appends([
                     'product_categories' => $product_categories,

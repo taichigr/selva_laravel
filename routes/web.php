@@ -170,6 +170,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // 画像保存のajax
     Route::post('/regist/productimage', 'AdministerController@registImage')->name('registImage');
 
+    Route::get('/products/review/show', 'AdministerController@productreviewshow')->name('productreviewshow')->middleware('authAdmin');
 
 
 
