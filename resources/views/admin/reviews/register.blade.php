@@ -113,6 +113,10 @@
                         <form method="POST" action="{{ route('admin.productrevieweditconfirm') }}">
                             @csrf
                             <input type="hidden" name="review_id" value="{{ $review->id }}">
+                            <div class="form-group">
+                                <div class="form-inline" style="width: 150px;">ID</div>
+                                <span style="margin-left: 40px">{{ $review->id }}</span>
+                            </div>
                             <div class="form-group" style="display: flex;">
                                 <div class="form-inline" style="width: 150px;">商品評価</div>
                                 <div class="form-inline" style="width: 300px;">
@@ -230,6 +234,10 @@
                         <form method="POST" action="{{ route('admin.productreviewregisterconfirm') }}">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <div class="form-group">
+                                <div class="form-inline" style="width: 150px;">ID</div>
+                                <span style="margin-left: 80px">登録後に自動採番</span>
+                            </div>
                             <div class="form-group" style="display: flex;">
                                 <div class="form-inline" style="width: 150px;">商品評価</div>
                                 <div class="form-inline" style="width: 300px;">

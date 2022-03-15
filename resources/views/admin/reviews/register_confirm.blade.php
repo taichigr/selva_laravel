@@ -123,6 +123,20 @@
                         @endif
                         <input type="hidden" name="evaluation" value="{{ $evaluation }}">
                         <input type="hidden" name="comment" value="{{ $comment }}">
+
+
+                                @if(!empty($edit_flg))
+                                    <div class="form-group">
+                                        <div class="form-inline" style="width: 150px;">ID</div>
+                                        <span style="margin-left: 80px">{{ $review_id }}</span>
+                                    </div>
+                                @else
+                                    <div class="form-group">
+                                        <div class="form-inline" style="width: 150px;">ID</div>
+                                        <span style="margin-left: 80px">登録後に自動採番</span>
+                                    </div>
+                                @endif
+
                         <div class="form-group" style="display: flex;">
                             <div class="form-inline" style="width: 150px;">商品評価</div>
                             <div class="form-inline" style="width: 300px;">
