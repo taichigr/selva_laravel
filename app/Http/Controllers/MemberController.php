@@ -150,8 +150,7 @@ class MemberController extends Controller
     public function withdrawcomplete()
     {
         $member = Member::where('id', session()->get('member_id'))->first();
-        $member->deleted_at = Carbon::now();
-        $member->save();
+        $member->delete();
         session()->flush();
         return redirect('/');
     }
