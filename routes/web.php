@@ -172,6 +172,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/products/review/show', 'AdministerController@productreviewshow')->name('productreviewshow')->middleware('authAdmin');
 
+    // 管理者レビュー登録
+    Route::get('/products/review/register', 'AdministerController@productreviewregister')->name('productreviewregister')->middleware('authAdmin');
+
+    Route::post('/products/review/registerconfirm', 'AdministerController@productreviewregisterconfirm')->name('productreviewregisterconfirm')->middleware('authAdmin');
+    Route::post('/products/review/registercomplete', 'AdministerController@productreviewregistercomplete')->name('productreviewregistercomplete')->middleware('authAdmin');
+
+    // 管理者レビュー編集
+    Route::get('/products/review/edit', 'AdministerController@productreviewedit')->name('productreviewedit')->middleware('authAdmin');
+    Route::post('/products/review/editconfirm', 'AdministerController@productrevieweditconfirm')->name('productrevieweditconfirm')->middleware('authAdmin');
+    Route::post('/products/review/editcomplete', 'AdministerController@productrevieweditcomplete')->name('productrevieweditcomplete')->middleware('authAdmin');
+
+
+
 
 
 

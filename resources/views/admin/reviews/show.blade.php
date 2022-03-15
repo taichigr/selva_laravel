@@ -48,7 +48,7 @@
     <main class="admin-main">
         <div class="container admin-container">
             <div class="btn-wrapper" style="text-align: left; margin-bottom: 30px">
-                <a class="btn btn-default-blue" href="">商品登録</a>
+                <a class="btn btn-default-blue" href="{{ route('admin.productreviewregister') }}">商品レビュー登録</a>
             </div>
 
             {{--            <div class="form-group">--}}
@@ -118,7 +118,7 @@
 
 
                                 <td>{{ $review->created_at->format('Y/m/d') }}</td>
-                                <td><a href="">編集</a></td>
+                                <td><a href="{{ route('admin.productreviewedit', ['review_id' => $review->id]) }}">編集</a></td>
                                 <td><a href="">詳細</a></td>
                             </tr>
                         @endforeach

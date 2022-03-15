@@ -1185,4 +1185,100 @@ class AdministerController extends Controller
 //        ]);
     }
 
+
+    public function productreviewregister()
+    {
+        $average = Review::where('product_id', 21)->avg('evaluation');
+        $product = Product::where('id', 21)->first();
+        return view('admin.reviews.register', [
+            'product' => $product,
+            'average' => $average,
+            'edit_flg' => false
+        ]);
+    }
+
+    public function productreviewregisterconfirm(Request $request)
+    {
+        $this->validate($request, [
+            'product_id' => 'required',
+            'evaluation' => 'required|in:1,2,3,4,5',
+            'comment' => 'required|max:500',
+        ]);
+
+        $product_id = $request->product_id;
+        $evaluation = $request->evaluation;
+        $comment = $request->comment;
+        $member_id = 99999;
+
+        $product = Product::where('id', $product_id)->first();
+        $average = Review::where('product_id', $product_id)->avg('evaluation');
+
+
+        return view('admin.reviews.register_confirm',[
+            'product_id' => $product_id,
+            'evaluation' => $evaluation,
+            'comment' => $comment,
+            'product' => $product,
+            'average' => $average,
+            'member_id' => $member_id,
+            'edit_flg' => false
+        ]);
+    }
+
+    public function productreviewregistercomplete(Request $request, Review $review)
+    {
+//        dd($request);
+        $review->member_id = $request->member_id;
+        $review->product_id = $request->product_id;
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+        $review->save();
+        return redirect('admin/products/review/show');
+    }
+
+    public function productreviewedit(Request $request)
+    {
+        $review = Review::where('id', $request->review_id)->first();
+//        dd($request);
+        return view('admin.reviews.register', [
+            'review' => $review,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function productrevieweditconfirm(Request $request)
+    {
+//        dd($request);
+        $this->validate($request, [
+            'review_id' => 'required',
+            'evaluation' => 'required|in:1,2,3,4,5',
+            'comment' => 'required|max:500',
+        ]);
+        $review = Review::where('id', $request->review_id)->first();
+        $average = $review->where('product_id', $review->product_id)->avg('evaluation');
+
+
+        $product = $review->product;
+//        dd($product);
+
+        return view('admin.reviews.register_confirm',[
+            'review_id' => $request->review_id,
+            'evaluation' => $request->evaluation,
+            'comment' => $request->comment,
+            'product' => $product,
+            'average' => $average,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function productrevieweditcomplete(Request $request)
+    {
+        $review = Review::where('id', $request->review_id)->first();
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+        $review->save();
+        return redirect('admin/products/review/show');
+    }
+
+
 }
