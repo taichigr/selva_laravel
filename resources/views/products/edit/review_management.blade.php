@@ -7,7 +7,7 @@
 @section('content')
     <header class="header">
         <div class="header-left">
-            <h2 style="height: 60px; line-height: 60px;">商品一覧</h2>
+            <h2 style="height: 60px; line-height: 60px;">商品レビュー管理</h2>
         </div>
         <div class="header-right">
             <ul>
@@ -18,10 +18,10 @@
         </div>
     </header>
     <main>
-        <div class="container bg-color_white">
+{{--        <div class="container bg-color_white">--}}
 
 
-        </div>
+{{--        </div>--}}
 
         <div style="margin: 20px"></div>
         <div class="container" style="border: none; width: 700px; box-sizing: border-box; padding: 0">
