@@ -151,6 +151,9 @@ return [
         'password' => 'パスワード',
         'evaluation' => '商品評価',
         'comment' => 'コメント',
+        'name_sei' => '氏名(姓)',
+        'name_mei' => '氏名(名)',
+        'nickname' => 'ニックネーム'
     ],
 
 ];
