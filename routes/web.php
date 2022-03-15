@@ -183,6 +183,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/products/review/editconfirm', 'AdministerController@productrevieweditconfirm')->name('productrevieweditconfirm')->middleware('authAdmin');
     Route::post('/products/review/editcomplete', 'AdministerController@productrevieweditcomplete')->name('productrevieweditcomplete')->middleware('authAdmin');
 
+    // 管理者　レビュー詳細と削除
+    Route::get('/products/review/detail', 'AdministerController@productreviewdetail')->name('productreviewdetail')->middleware('authAdmin');
+    Route::post('/products/review/delete', 'AdministerController@productreviewdelete')->name('productreviewdelete')->middleware('authAdmin');
+
 
 
 

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Review extends Model
 {
@@ -12,6 +13,8 @@ class Review extends Model
 //    {
 //        $this::where('product_id', $product_id)->get('evaluation')->avg();
 //    }
+    use SoftDeletes;
+
 
     public function member(): BelongsTo
     {

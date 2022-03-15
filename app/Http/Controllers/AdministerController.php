@@ -1280,5 +1280,32 @@ class AdministerController extends Controller
         return redirect('admin/products/review/show');
     }
 
+    public function productreviewdetail(Request $request)
+    {
+//        dd($request);
+        $review = Review::where('id', $request->review_id)->first();
+        $average = $review->where('product_id', $review->product_id)->avg('evaluation');
+
+
+        $product = $review->product;
+//        dd($product);
+
+        return view('admin.reviews.detail',[
+            'review_id' => $request->review_id,
+            'evaluation' => $review->evaluation,
+            'comment' => $review->comment,
+            'product' => $product,
+            'average' => $average,
+            'edit_flg' => true
+        ]);
+    }
+
+    public function productreviewdelete(Request $request)
+    {
+        $review = Review::where('id', $request->review_id)->first();
+        $review->delete();
+        return redirect('admin/products/review/show');
+    }
+
 
 }

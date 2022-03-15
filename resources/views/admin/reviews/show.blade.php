@@ -109,17 +109,19 @@
                                 <td>{{ $review->product_id }}</td>
                                 <td>{{ $review->evaluation }}</td>
                                 <td>
-                                    @if(mb_strlen($review->comment) >= 7)
-                                        {{ mb_substr($review->comment,0,7) }}...
-                                    @else
-                                        {{ $review->comment }}
-                                    @endif
+                                    <a href="{{ route('admin.productreviewdetail', ['review_id' => $review->id]) }}">
+                                        @if(mb_strlen($review->comment) >= 7)
+                                            {{ mb_substr($review->comment,0,7) }}...
+                                        @else
+                                            {{ $review->comment }}
+                                        @endif
+                                    </a>
                                 </td>
 
 
                                 <td>{{ $review->created_at->format('Y/m/d') }}</td>
                                 <td><a href="{{ route('admin.productreviewedit', ['review_id' => $review->id]) }}">編集</a></td>
-                                <td><a href="">詳細</a></td>
+                                <td><a href="{{ route('admin.productreviewdetail', ['review_id' => $review->id]) }}">詳細</a></td>
                             </tr>
                         @endforeach
                     @endif
