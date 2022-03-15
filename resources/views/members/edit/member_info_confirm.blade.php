@@ -58,7 +58,7 @@
                     <input class="btn btn-default" type="submit" value="変更完了">
                 </div>
                 <div class="form-group btn-wrapper">
-                    <a class="btn btn-back" href="{{ route('members.mypage') }}" >マイページに戻る</a>
+                    <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
                 </div>
             </form>
         </div>
