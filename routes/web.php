@@ -161,6 +161,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/products/register/re', 'AdministerController@registFormre')->name('registFormre')->middleware('authAdmin');
     Route::post('/products/edit/re', 'AdministerController@editFormre')->name('editFormre')->middleware('authAdmin');
 
+    // 管理者商品詳細
+    Route::get('/products/detail', 'AdministerController@productdetailshow')->name('productdetailshow')->middleware('authAdmin');
+
+    Route::post('/products/delete', 'AdministerController@productdelete')->name('productdelete')->middleware('authAdmin');
 
 
     // 画像保存のajax

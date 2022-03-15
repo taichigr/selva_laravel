@@ -105,14 +105,14 @@
                             <tr style="background-color: #fff">
                                 <td>{{ $product->id }}</td>
                                 <td>
-                                    <a href="">
+                                    <a href="{{ route('admin.productdetailshow', ['product_id' => $product->id]) }}">
                                         {{ $product->name }}
                                     </a>
                                 </td>
 
                                 <td>{{ $product->created_at->format('Y/m/d') }}</td>
                                 <td><a href="{{ route('admin.producteditshow', ['product_id' => $product->id]) }}">編集</a></td>
-                                <td><a href="">詳細</a></td>
+                                <td><a href="{{ route('admin.productdetailshow', ['product_id' => $product->id]) }}">詳細</a></td>
                             </tr>
                         @endforeach
                     @endif

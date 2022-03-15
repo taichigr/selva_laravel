@@ -143,16 +143,25 @@
                         {!! nl2br(e($product_content)) !!}
                         {{--                        {{ $product->product_content }}--}}
                     </div>
+                </div>
 
 
-            </form>
+                    <div class="form-group btn-wrapper">
+                        @if(!empty($edit_flg))
+                            <input class="btn btn-back-blue" type="submit" value="編集完了">
+                        @else
+                            <input class="btn btn-back-blue" type="submit" value="登録完了">
+                        @endif
+                    </div>
+
+                    </form>
 
                             <div class="form-group btn-wrapper">
-                                @if(!empty($edit_flg))
-                                    <input class="btn btn-back-blue" type="submit" value="編集完了">
-                                @else
-                                    <input class="btn btn-back-blue" type="submit" value="登録完了">
-                                @endif
+{{--                                @if(!empty($edit_flg))--}}
+{{--                                    <input class="btn btn-back-blue" type="submit" value="編集完了">--}}
+{{--                                @else--}}
+{{--                                    <input class="btn btn-back-blue" type="submit" value="登録完了">--}}
+{{--                                @endif--}}
 
                                 @if(!empty($edit_flg))
                                     <form method="post" action="{{ route('admin.editFormre') }}" id="resend">
@@ -167,6 +176,7 @@
                                         <input type="hidden" name="image_3" value="{{ $image_3 }}">
                                         <input type="hidden" name="image_4" value="{{ $image_4 }}">
                                         <input type="hidden" name="product_content" value="{{ $product_content }}">
+                                        <input class="btn btn-back-blue" type="submit" value="前に戻る" form="resend">
                                     </form>
                                 @else
                                     <form method="post" action="{{ route('admin.registFormre') }}" id="resend">
@@ -185,9 +195,7 @@
 
 
                                 @endif
-                                    <button onclick="location.href='{{ url()->previous() }}'">
-                                        back
-                                    </button>
+
                             </div>
 
         </div>

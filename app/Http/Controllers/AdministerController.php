@@ -8,6 +8,7 @@ use App\Member;
 use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
+use App\Review;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -1045,6 +1046,41 @@ class AdministerController extends Controller
             "image_4" => $request->image_4,
             "product_content" => $request->product_content,
         ]);
+    }
+
+
+    public function productdetailshow(Request $request)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        $product = Product::where('id', $request->product_id)->first();
+//        dd($product);
+        $average = Review::where('product_id', $request->product_id)->avg('evaluation');
+        $reviews = Review::where('product_id', $request->product_id)->paginate(3);
+
+        return view('admin.products.detail', [
+            'product_categories' => $product_categories,
+            'product_subcategories' => $product_subcategories,
+            'product_id' => $product->id,
+            'member_id' => $product->member_id,
+            "name" => $product->name,
+            "product_category_id" => $product->product_category_id,
+            "product_subcategory_id" => $product->product_subcategory_id,
+            "image_1" => $product->image_1,
+            "image_2" => $product->image_2,
+            "image_3" => $product->image_3,
+            "image_4" => $product->image_4,
+            "product_content" => $product->product_content,
+            'average' => $average,
+            'reviews' => $reviews
+        ]);
+    }
+
+    public function productdelete(Request $request)
+    {
+        $product = Product::where('id', $request->product_id)->first();
+        $product->delete();
+        return redirect('admin/products/show');
     }
 
 }
