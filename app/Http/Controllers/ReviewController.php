@@ -11,7 +11,7 @@ class ReviewController extends Controller
     //
     public function revieweditmanagement()
     {
-        $reviews = Review::where('member_id', session()->get('member_id'))->paginate(6);
+        $reviews = Review::where('member_id', session()->get('member_id'))->paginate(5);
 //        dd($reviews);
         return view('products.edit.review_management', ['reviews' => $reviews]);
     }
