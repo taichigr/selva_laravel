@@ -315,7 +315,6 @@
                 $(this).find(':submit').prop('disabled', 'true');
             });
 
-            $('')
 
         })
     </script>
