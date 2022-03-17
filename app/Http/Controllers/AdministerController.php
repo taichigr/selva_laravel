@@ -666,7 +666,7 @@ class AdministerController extends Controller
         $product_category->save();
         $product_category_id = $product_category->id;
 
-        Product_subcategory::where('product_category_id', $product_category_id)->delete();
+        Product_subcategory::where('product_category_id', $product_category_id)->forceDelete();
 
         $product_subcategory1 = new Product_subcategory;
         $product_subcategory1->name = $request->product_subcategory_name1;
@@ -745,7 +745,7 @@ class AdministerController extends Controller
     public function productscategorydelete(Request $request)
     {
         Product_category::where('id', $request->product_category_id)->delete();
-        Product_subcategory::where('product_category_id', $request->product_category_id)->delete();
+        Product_subcategory::where('product_category_id', $request->product_category_id)->forceDelete();
 
         return redirect('admin/products/category/show');
     }
