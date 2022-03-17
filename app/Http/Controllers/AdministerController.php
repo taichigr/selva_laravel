@@ -772,7 +772,7 @@ class AdministerController extends Controller
                 if($id_flg == 'asc') {
                     $query->orderBy('products.id', 'asc');
                     $id_flg = 'desc';
-                } else {
+                } elseif($id_flg == 'desc') {
                     $query->orderBy('products.id', 'desc');
                     $id_flg = 'asc';
                 }
@@ -780,7 +780,7 @@ class AdministerController extends Controller
                 if($created_at_flg == 'asc') {
                     $query->orderBy('created_at', 'asc');
                     $created_at_flg = 'desc';
-                } else {
+                } elseif($created_at_flg == 'desc') {
                     $query->orderBy('created_at', 'desc');
                     $created_at_flg = 'asc';
                 }
