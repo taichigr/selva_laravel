@@ -468,6 +468,10 @@ class AdministerController extends Controller
             $created_at_flg = 'asc';
         }
 
+        if(empty($created_at_flg) && empty($id_flg)) {
+            $query->orderBy('id','desc');
+        }
+
         if(!empty($product_category_id)) {
             $query->where('product_categories.id', $product_category_id);
             if(!empty($freeword)) {
@@ -747,8 +751,8 @@ class AdministerController extends Controller
 
     public function productsshow(Request $request)
     {
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
 
         $product_id = $request->product_id;
         $freeword = $request->freeword;
@@ -805,6 +809,10 @@ class AdministerController extends Controller
         } else {
             $query->orderBy('products.created_at', 'desc');
             $created_at_flg = 'asc';
+        }
+
+        if(empty($id_flg) && empty($created_at_flg)) {
+            $query->orderBy('id','desc');
         }
 
 
@@ -1085,8 +1093,8 @@ class AdministerController extends Controller
 
     public function productreviewshow(Request $request)
     {
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
         $review_id = $request->review_id;
         $freeword = $request->freeword;
 //        dd($request);
@@ -1146,6 +1154,10 @@ class AdministerController extends Controller
         } elseif($created_at_flg == 'desc') {
             $query->orderBy('created_at', 'desc');
             $created_at_flg = 'asc';
+        }
+
+        if(empty($id_flg) && empty($created_at_flg)) {
+            $query->orderBy('id','desc');
         }
 
         if(!empty($review_id)) {
