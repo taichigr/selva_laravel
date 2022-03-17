@@ -495,7 +495,7 @@ class AdministerController extends Controller
         }
 
         $product_categories = $query
-            ->select('product_categories.*')->distinct()
+            ->distinct()->select('product_categories.*')
             ->paginate(10);
 //        dd($product_categories);
         return view('admin.products.category_show', [
