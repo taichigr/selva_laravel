@@ -485,7 +485,7 @@ class AdministerController extends Controller
             }
         } else {
             if(!empty($freeword)) {
-                $query->leftJoin('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
+                $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
                 $query->where(function($query) use ($freeword) {
                     $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
                     $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
