@@ -21,10 +21,11 @@
                 <?php endif ?>
 
                 <?php if(!empty(session('admin_login_date'))): ?>
-                <form method="post" action="">
-                    @csrf
-                    <li><button style="background-color: #cfcfcf; font-size: 16px; height: 32px; vertical-align: center; line-height: 16px" type="submit" class="btn btn-header">ログアウト</button></li>
-                </form>
+                <li><a class="btn btn-admin-header" style="border: solid 1px #000" href="{{ route('admin.membershow') }}">一覧へ戻る</a></li>
+                {{--                <form method="post" action="">--}}
+{{--                    @csrf--}}
+{{--                    <li><button style="background-color: #cfcfcf; font-size: 16px; height: 32px; vertical-align: center; line-height: 16px" type="submit" class="btn btn-header">ログアウト</button></li>--}}
+{{--                </form>--}}
                 <?php endif ?>
             </ul>
         </div>
