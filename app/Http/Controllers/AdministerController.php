@@ -73,8 +73,8 @@ class AdministerController extends Controller
     public function membershow(Request $request)
     {
 
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
 //        dd($request);
         $id = $request->id;
         $male = !empty($request->male) ? $request->male: null;
@@ -408,8 +408,8 @@ class AdministerController extends Controller
     //=========================
     public function productscategoryshow(Request $request)
     {
-        $id_flg = !empty($request->id_flg) ? $request->id_flg: 'desc';
-        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : 'desc';
+        $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
+        $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
 
         $product_category_id = $request->product_category_id;
         $freeword = $request->freeword;
@@ -469,7 +469,7 @@ class AdministerController extends Controller
         }
 
         if(!empty($product_category_id)) {
-            $query->where('id', $product_category_id);
+            $query->where('product_categories.id', $product_category_id);
             if(!empty($freeword)) {
                 $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
                 $query->where(function($query) use ($freeword) {
