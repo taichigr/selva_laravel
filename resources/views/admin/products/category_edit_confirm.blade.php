@@ -120,6 +120,7 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="編集完了">
+                        <button class="btn btn-back-blue" type="button" onclick="history.back()">前へ戻る</button>
                     </div>
                 </form>
             @else
@@ -204,6 +205,7 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="登録">
+                        <button class="btn btn-back-blue" type="button" onclick="history.back()">前へ戻る</button>
                     </div>
                 </form>
             @endif

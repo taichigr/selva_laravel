@@ -269,6 +269,8 @@
 
                         <div class="form-group btn-wrapper">
                             <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                            <a class="btn btn-back-blue" href="{{ route('admin.productsshow') }}">一覧へ戻る</a>
+
                         </div>
 
                     </form>
@@ -503,6 +505,7 @@
 
                         <div class="form-group btn-wrapper">
                             <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                            <a class="btn btn-back-blue" href="{{ route('admin.productsshow') }}">一覧へ戻る</a>
                         </div>
 
                     </form>
@@ -734,6 +737,7 @@
 
                         <div class="form-group btn-wrapper">
                             <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                            <a class="btn btn-back-blue" href="{{ route('admin.productsshow') }}">一覧へ戻る</a>
                         </div>
 
                     </form>
@@ -907,6 +911,7 @@
 
                         <div class="form-group btn-wrapper">
                             <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                            <a class="btn btn-back-blue" href="{{ route('admin.productsshow') }}">一覧へ戻る</a>
                         </div>
 
                     </form>

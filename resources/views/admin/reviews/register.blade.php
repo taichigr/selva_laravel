@@ -252,7 +252,7 @@
                             <div class="form-group" style="display: flex;">
                                 <div class="form-inline" style="width: 150px;">商品コメント</div>
                                 <div class="form-inline" style="width: 500px;">
-                                        <textarea name="comment" id="" style="width: 400px; height: 200px">{{ old($comment) }}</textarea>
+                                        <textarea name="comment" id="" style="width: 400px; height: 200px">{{ old('comment') }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group btn-wrapper">

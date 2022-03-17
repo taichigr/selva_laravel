@@ -158,6 +158,8 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <a class="btn btn-back-blue" href="{{ route('admin.productscategoryshow') }}">一覧へ戻る</a>
+
                     </div>
                 </form>
             @else
@@ -243,6 +245,8 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <a class="btn btn-back-blue" href="{{ route('admin.productscategoryshow') }}">一覧へ戻る</a>
+
                     </div>
                 </form>
             @endif
