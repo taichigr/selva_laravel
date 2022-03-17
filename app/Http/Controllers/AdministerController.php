@@ -485,7 +485,7 @@ class AdministerController extends Controller
             }
         } else {
             if(!empty($freeword)) {
-                $query->join('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
+                $query->leftJoin('product_subcategories', 'product_categories.id', '=', 'product_subcategories.product_category_id');
                 $query->where(function($query) use ($freeword) {
                     $query->orWhere('product_categories.name', 'like', '%'.$freeword.'%');
                     $query->orWhere('product_subcategories.name', 'like', '%'.$freeword.'%');
@@ -497,7 +497,7 @@ class AdministerController extends Controller
         $product_categories = $query
             ->distinct()->select('product_categories.*')
             ->paginate(10);
-        dd($query->toSql());
+//        dd($query->toSql());
 //        dd($product_categories);
         return view('admin.products.category_show', [
             'product_categories' => $product_categories,
