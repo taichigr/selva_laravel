@@ -99,7 +99,7 @@
                             <tr>
                                 <td>{{ $member->id }}</td>
                                 <td>
-                                    <a href="{{ route('admin.membereditshow', ['member_id'=> $member->id]) }}">
+                                    <a href="{{ route('admin.memberdetailshow', ['member_id' => $member->id]) }}">
                                         {{ $member->name_sei }}　{{ $member->name_mei }}
                                     </a>
                                 </td>

@@ -126,6 +126,7 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <a class="btn btn-back-blue" style="border: solid 1px #000" href="{{ route('admin.membershow') }}">一覧へ戻る</a>
                     </div>
                 </form>
             @else
@@ -210,6 +211,7 @@
 
                     <div class="form-group btn-wrapper">
                         <input class="btn btn-back-blue" type="submit" value="確認画面へ">
+                        <a class="btn btn-back-blue" style="border: solid 1px #000" href="{{ route('admin.membershow') }}">一覧へ戻る</a>
                     </div>
                 </form>
             @endif
