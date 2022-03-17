@@ -17,28 +17,18 @@
         <div class="header-right">
 
             <ul>
-                <?php if(!empty(session('admin_login_date'))): ?>
-                <li>
-                    ようこそ
-                    @if(!empty(session('admin_name')))
-                        {{ session('admin_name') }}
-                    @endif
-                    さん
-                </li>
-                <?php endif ?>
                 {{--            <li><a class="btn btn-header" href="">商品一覧</a></li>--}}
                 <?php if(empty(session('admin_login_date'))): ?>
                 <li><a class="btn btn-admin-header" href="{{ route('admin.login') }}">ログイン</a></li>
                 <?php endif ?>
-                <?php if(empty(session('admin_login_date'))): ?>
-                <li><a class="btn btn-admin-header" href="{{ route('admin.index') }}">トップへ戻る</a></li>
-                <?php endif ?>
+
 
                 <?php if(!empty(session('admin_login_date'))): ?>
-                <form method="post" action="{{ route('admin.logout') }}">
-                    @csrf
-                    <li><button style="background-color: #cfcfcf; font-size: 16px; height: 32px; vertical-align: center; line-height: 16px" type="submit" class="btn btn-header">ログアウト</button></li>
-                </form>
+                    <li><a class="btn btn-admin-header" style="border: solid 1px #000" href="{{ route('admin.index') }}">トップへ戻る</a></li>
+                    {{--                <form method="post" action="{{ route('admin.logout') }}">--}}
+{{--                    @csrf--}}
+{{--                    <li><button style="background-color: #cfcfcf; font-size: 16px; height: 32px; vertical-align: center; line-height: 16px" type="submit" class="btn btn-header">ログアウト</button></li>--}}
+{{--                </form>--}}
                 <?php endif ?>
             </ul>
         </div>
