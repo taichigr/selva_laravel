@@ -199,6 +199,9 @@
                             <div class="form-inline" style="width: 500px">{!! nl2br(e($review->comment)) !!}</div>
 
                         </div>
+                        <div class="btn-wrapper" style="margin-bottom: 10px; text-align: right">
+                            <a href="{{ route('admin.productreviewdetail', ['review_id' => $review->id]) }}" style="border: 1px #000 solid; padding: 6px;">商品レビュー詳細</a>
+                        </div>
                     </div>
                 @endforeach
                 @endif
