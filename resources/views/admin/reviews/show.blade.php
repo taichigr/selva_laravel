@@ -74,14 +74,14 @@
                     <tr class="member-showtable-header">
                         <th>
                             ID
-                            <button name="id_flg" value="{{ $id_flg ?? 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
+                            <button name="id_flg" value="{{ !empty($id_flg) ?$id_flg: 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
                         </th>
                         <th>商品ID</th>
                         <th>評価</th>
                         <th>商品コメント</th>
                         <th>
                             登録日時
-                            <button name="created_at_flg" value="{{ $created_at_flg ?? 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
+                            <button name="created_at_flg" value="{{ !empty($created_at_flg) ?$created_at_flg: 'asc' }}" class="submit-order" type="submit" form="product_review-search">▼</button>
                         </th>
                         <th>編集</th>
                         <th>詳細</th>

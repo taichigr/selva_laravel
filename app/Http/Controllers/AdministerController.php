@@ -1181,7 +1181,6 @@ class AdministerController extends Controller
         }
 
         $reviews = $query->paginate(10);
-//        dd($product_categories);
         return view('admin.reviews.show', [
             'reviews' => $reviews,
             'review_id' => $review_id,
