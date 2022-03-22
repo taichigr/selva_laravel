@@ -1094,7 +1094,7 @@ class AdministerController extends Controller
 
     public function productreviewshow(Request $request)
     {
-        $product = Product::where('id', 55)->first();
+        $product = Product::where('id', 54)->first();
         dd($product);
         $id_flg = !empty($request->id_flg) ? $request->id_flg: '';
         $created_at_flg = !empty($request->created_at_flg) ? $request->created_at_flg : '';
